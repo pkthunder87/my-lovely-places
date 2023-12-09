@@ -3,7 +3,7 @@ export default {
   content: ['./index.html', './src/**/*.{js,ts,jsx,tsx}'],
   theme: {
     fontFamily: {
-      sans: 'Barlow Semi Condensed',
+      serif: 'Playfair Display',
     },
     screens: {
       sm: '425px',
@@ -17,6 +17,7 @@ export default {
         periwinkle: '#B4ADEA',
         'davy-gray': '#50514F',
         'ultra-pink': '#FF6FFF',
+        'heavy-blue': '#142D54',
       },
     },
   },

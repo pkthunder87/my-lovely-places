@@ -3,5 +3,5 @@
 @tailwind utilities;
 
 body {
-  @apply bg-flash-white h-[100dvh] w-[100dvw];
+  @apply font-serif h-[100dvh] w-[100dvw] bg-flash-white;
 }
