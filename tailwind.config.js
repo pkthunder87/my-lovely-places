@@ -6,7 +6,7 @@ export default {
       serif: 'Playfair Display',
     },
     screens: {
-      sm: '440px',
+      sm: '441px',
       md: '750px',
       lg: '1024px',
       xl: '1280px',

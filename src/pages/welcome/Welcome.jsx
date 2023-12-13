@@ -8,7 +8,7 @@ import Footer from './Footer';
 function Welcome() {
   return (
     <>
-      <header className=" relative h-16 w-full bg-pale-blue">
+      <header className=" relative h-10 w-full bg-pale-blue sm:h-16">
         <nav>
           <ButtonOutline>Login</ButtonOutline>
           <ButtonSolid>Create Account</ButtonSolid>
