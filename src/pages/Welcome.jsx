@@ -23,7 +23,7 @@ function Welcome() {
           </div>
           <img
             className="relative h-[calc(100dvh-4rem)] w-full"
-            src="./cozy-header.png"
+            src="./hero-desktop.webp"
             alt="Pastel doodle of women on typing on laptop"
           />
         </section>
@@ -39,7 +39,7 @@ function Welcome() {
           </div>
           <img
             className=" h-[50dvw] w-[50dvw] bg-pale-blue"
-            src="./travel.png"
+            src="./travel-desktop.webp"
             alt="Pastel doodle of women on typing on laptop"
           />
         </section>
