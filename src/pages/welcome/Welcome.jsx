@@ -3,6 +3,7 @@ import ButtonOutline from '../../ui/ButtonOutline';
 import Hero from './Hero';
 import Step from './Step';
 import Cta from './Cta';
+import Footer from './Footer';
 
 function Welcome() {
   return (
@@ -50,7 +51,7 @@ function Welcome() {
         <Cta />
       </main>
 
-      <footer className="      relative h-16 w-full bg-pale-blue"></footer>
+      <Footer />
     </>
   );
 }
