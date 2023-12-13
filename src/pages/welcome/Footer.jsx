@@ -1,7 +1,7 @@
 function Footer() {
   return (
-    <footer className="      relative flex h-16 w-full items-center justify-end bg-pale-blue text-2xl text-white">
-      <p className="mr-8">
+    <footer className="      relative flex h-10 w-full items-center justify-end bg-pale-blue text-base text-white sm:h-16 sm:text-2xl">
+      <p className="mr-4 sm:mr-8">
         &copy; 2023 by{' '}
         <a
           href="https://github.com/pkthunder87/my-lovely-places"

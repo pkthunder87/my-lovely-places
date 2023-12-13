@@ -11,7 +11,9 @@ function Welcome() {
       <header className=" relative h-10 w-full bg-pale-blue sm:h-16">
         <nav>
           <ButtonOutline>Login</ButtonOutline>
-          <ButtonSolid>Create Account</ButtonSolid>
+          <ButtonSolid height="h-8 sm:h-12" width="w-28 sm:w-56">
+            Create Account
+          </ButtonSolid>
         </nav>
       </header>
       <main className="grid grid-cols-2">
