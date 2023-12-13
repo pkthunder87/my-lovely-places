@@ -38,7 +38,7 @@ function Welcome() {
           imgMobi="./gps-mobile.webp"
           imgOut="./gps-outdated.jpg"
           stepNum={2}
-          imgZPattern="-order-1"
+          imgZPattern="sm:-order-1 order-1"
           stepText="Mark the Location"
           textColor="text-saira-red"
           bgColor="bg-saira-red"
