@@ -1,21 +1,13 @@
-import ButtonSolid from '../../ui/ButtonSolid';
-import ButtonOutline from '../../ui/ButtonOutline';
 import Hero from './Hero';
 import Step from './Step';
 import Cta from './Cta';
 import Footer from './Footer';
+import Header from '../../ui/Header';
 
 function Welcome() {
   return (
     <>
-      <header className=" relative h-10 w-full bg-pale-blue sm:h-16">
-        <nav>
-          <ButtonOutline>Login</ButtonOutline>
-          <ButtonSolid height="h-8 sm:h-12" width="w-28 sm:w-56">
-            Create Account
-          </ButtonSolid>
-        </nav>
-      </header>
+      <Header noLogin={false} />
       <main className="grid grid-cols-2">
         <Hero />
 
