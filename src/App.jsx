@@ -3,7 +3,7 @@ import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
 import Welcome from './pages/welcome/Welcome';
 import Login from './pages/login/Login';
 import Signup from './pages/signup/Signup';
-import PageNotFound from '../../frontend-mentor/advance/rock-paper-scissors/src/pages/PageNotFound';
+import PageNotFound from './pages/PageNotFound';
 
 function App() {
   return (

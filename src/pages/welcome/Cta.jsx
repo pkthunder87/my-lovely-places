@@ -24,6 +24,7 @@ function Cta() {
         height="h-8 sm:h-14"
         width="w-32 firefox:w-36 sm:w-56"
         position="absolute top-[42%] -translate-y-1/2 left-[48%] -translate-x-1/2 transform"
+        linkTo="/signup"
       >
         Create Account
       </ButtonSolid>

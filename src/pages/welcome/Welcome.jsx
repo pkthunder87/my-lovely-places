@@ -51,7 +51,11 @@ function Welcome() {
         <Cta />
       </main>
 
-      <Footer />
+      <Footer
+        height="h-10 sm:h-16"
+        textColor="text-white"
+        position="mr-4 sm:mr-8"
+      />
     </>
   );
 }
