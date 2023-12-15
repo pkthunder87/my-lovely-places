@@ -3,7 +3,7 @@ import Footer from './welcome/Footer';
 
 function PageNotFound() {
   return (
-    <div>
+    <div className="relative  sm:block">
       <Header solidText="Home" linkToSolid="/welcome" />
       <picture className="relative">
         <source
@@ -17,15 +17,15 @@ function PageNotFound() {
           type="image/webp"
         />
         <img
-          className="mt-12"
+          className="mt-[calc(100dvh/3)] scale-150 sm:mt-12 sm:scale-100"
           src="./not-found-outdated.jpg"
           alt="Pastel doodle of a man and women with magnifying glasses"
           type="image/jpg"
         />
-        <h1 className="absolute left-[49%] top-[30%] -translate-x-1/2 -translate-y-1/2 transform font-bold text-periwinkle lg:text-4xl xl:text-5xl">
-          Page not Found
-        </h1>
       </picture>
+      <h1 className="absolute left-[49%] top-[60%] -translate-x-1/2 -translate-y-1/2 transform text-xl font-bold text-periwinkle firefox:top-[66%] firefox:text-2xl sm:top-[40%] firefox:sm:top-[40%] firefox:sm:text-4xl  lg:text-4xl xl:text-5xl">
+        Page not Found
+      </h1>
       <Footer />
     </div>
   );
