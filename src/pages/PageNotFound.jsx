@@ -4,7 +4,7 @@ import Footer from './welcome/Footer';
 function PageNotFound() {
   return (
     <div className="relative  sm:block">
-      <Header solidText="Home" linkToSolid="/welcome" />
+      <Header solidText="&larr; Back" linkToSolid={-1} />
       <picture className="relative">
         <source
           media="(max-width:441px)"
