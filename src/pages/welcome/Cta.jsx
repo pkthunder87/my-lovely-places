@@ -22,13 +22,14 @@ function Cta() {
       </picture>
       <ButtonSolid
         height="h-8 sm:h-14"
-        width="w-32 sm:w-56"
+        width="w-32 firefox:w-36 sm:w-56"
         position="absolute top-[42%] -translate-y-1/2 left-[48%] -translate-x-1/2 transform"
       >
         Create Account
       </ButtonSolid>
-      <p className="absolute left-[48%] top-[48%] -translate-x-1/2 -translate-y-1/2 transform text-xs font-semibold tracking-wider text-sunshine sm:text-xl sm:font-bold">
-        It&apos;s <span className="text-base sm:text-3xl">100</span>% Free
+      <p className="firefox:text-sm absolute left-[48%] top-[48%] -translate-x-1/2 -translate-y-1/2 transform text-xs font-semibold tracking-wider text-sunshine sm:text-xl sm:font-bold">
+        It&apos;s{' '}
+        <span className="firefox:text-lg text-base sm:text-3xl">100</span>% Free
       </p>
     </section>
   );

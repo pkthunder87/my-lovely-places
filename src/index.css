@@ -3,5 +3,9 @@
 @tailwind utilities;
 
 body {
-  @apply font-serif h-[100dvh] w-[100dvw] bg-flash-white;
+  @apply h-[100dvh] w-[100dvw] bg-flash-white font-serif;
+}
+
+html {
+  @apply firefox:text-xs;
 }

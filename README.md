@@ -20,6 +20,7 @@ This is my final project for CS50x.
 - Vite
 - React
 - Tailwind CSS
+- IgorKowalczyk is-browser
 - Supabase
 - React Query
 - React Router

@@ -7,7 +7,7 @@ function ButtonSolid({
   return (
     <div className={` ${position}`}>
       <button
-        className={`flex ${width} ${height} items-center justify-center rounded-3xl bg-tint-teal text-xs tracking-wide text-white hover:brightness-110   sm:text-2xl`}
+        className={`flex ${width} ${height} firefox:text-sm items-center justify-center rounded-3xl bg-tint-teal text-xs tracking-wide text-white hover:brightness-110   sm:text-2xl`}
       >
         {children}
       </button>
