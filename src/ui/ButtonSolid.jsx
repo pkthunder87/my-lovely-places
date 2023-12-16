@@ -5,7 +5,6 @@ function ButtonSolid({
   height,
   width,
   linkTo,
-  handleClick,
   bgColor = 'bg-tint-teal',
   textSize = 'text-xs firefox:text-sm sm:text-2xl',
   fontWeight = 'font-normal',
@@ -16,7 +15,6 @@ function ButtonSolid({
       <NavLink to={linkTo}>
         <button
           className={`flex ${width} ${height} items-center justify-center rounded-3xl ${fontWeight} ${bgColor} tracking-wide text-white hover:brightness-110 ${textSize}`}
-          onClick={handleClick}
         >
           {children}
         </button>
