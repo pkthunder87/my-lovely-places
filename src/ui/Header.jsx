@@ -1,5 +1,6 @@
 import ButtonSolid from './ButtonSolid';
 import ButtonOutline from './ButtonOutline';
+import { useNavigate } from 'react-router-dom';
 
 function Header({
   noLogin = true,
@@ -9,6 +10,8 @@ function Header({
   linkToOutline = '/login',
   linkToSolid = '/signup',
 }) {
+  const navigate = useNavigate();
+
   return (
     <header className=" relative h-10 w-full bg-pale-blue sm:h-16">
       <nav>
@@ -26,6 +29,7 @@ function Header({
             height="h-8 sm:h-12"
             width="w-28 firefox:w-32 sm:w-56"
             linkTo={linkToSolid}
+            handleClick={navigate({ linkToSolid })}
           >
             {solidText}
           </ButtonSolid>

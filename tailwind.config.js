@@ -7,8 +7,8 @@ export default {
     },
     screens: {
       sm: '441px',
-      md: '750px',
-      lg: '1024px',
+      md: '1200px',
+      lg: '1240px',
       xl: '1280px',
       xl2: '1400px',
     },
