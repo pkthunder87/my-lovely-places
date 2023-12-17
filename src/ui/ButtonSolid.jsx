@@ -14,7 +14,7 @@ function ButtonSolid({
     <div className={` ${position}`}>
       <NavLink to={linkTo}>
         <button
-          className={`flex ${width} ${height} items-center justify-center rounded-3xl ${fontWeight} ${bgColor} tracking-wide text-white hover:brightness-110 ${textSize}`}
+          className={`button-general ${textSize} ${width} ${height} ${fontWeight} ${bgColor}`}
         >
           {children}
         </button>

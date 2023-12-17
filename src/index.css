@@ -2,6 +2,20 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer components {
+  .input-login {
+    @apply ml-2 
+    h-6 w-32 cursor-pointer rounded-2xl bg-white pl-4 text-sm text-periwinkle placeholder:text-periwinkle focus:outline-none focus:ring focus:ring-tint-teal focus:ring-offset-[-1px] firefox:h-7 firefox:w-48 firefox:text-base sm:h-10 sm:w-56 sm:text-lg
+    md:h-12
+    md:w-80
+    md:text-2xl;
+  }
+
+  .button-general {
+    @apply flex  items-center justify-center rounded-3xl  tracking-wide text-white hover:brightness-110;
+  }
+}
+
 body {
   @apply h-[100dvh] w-[100dvw] bg-flash-white font-serif;
 }

@@ -10,40 +10,23 @@ function Login() {
       left-[66.5%] top-[66%] z-10 flex -translate-x-1/2 -translate-y-1/2 transform flex-col items-center gap-2 firefox:left-[66%] firefox:top-[63%] sm:left-[72%] sm:top-[47%] sm:gap-4 md:left-[71.5%] md:top-[43%]"
       >
         <input
-          className="ml-2 h-6 w-32 cursor-pointer rounded-2xl bg-white pl-4 text-sm text-periwinkle placeholder:text-periwinkle focus:outline-none focus:ring focus:ring-tint-teal focus:ring-offset-[-1px] firefox:h-7
-          firefox:w-48
-          firefox:text-base
-          sm:h-10
-         sm:w-56
-          sm:text-lg
-          md:h-12
-          md:w-80 md:text-2xl"
+          className="input-login"
           type="text"
           id="email"
           name="email"
           placeholder="Email Address"
         />
         <input
-          className="ml-2 
-          h-6 w-32 cursor-pointer rounded-2xl bg-white pl-4 text-sm text-periwinkle placeholder:text-periwinkle focus:outline-none focus:ring focus:ring-tint-teal focus:ring-offset-[-1px] firefox:h-7 firefox:w-48 firefox:text-base sm:h-10 sm:w-56 sm:text-lg
-          md:h-12
-          md:w-80
-          md:text-2xl"
+          className="input-login"
           type="text"
-          id="email"
-          name="email"
+          id="password"
+          name="password"
           placeholder="Password"
         />
         <div className="flex flex-col gap-2 md:mt-8 md:gap-4">
-          <ButtonSolid
-            height="h-6 firefox:h-7 sm:h-9 md:h-10"
-            width="firefox:w-20 w-14 sm:w-28 md:w-36"
-            textSize="firefox:text-sm text-xs sm:text-base md:text-xl"
-            fontWeight="font-bold"
-            position=""
-          >
+          <button className="button-general h-6 w-14 bg-tint-teal text-xs font-bold firefox:h-7 firefox:w-20 firefox:text-sm sm:h-9 sm:w-28 sm:text-base md:h-10 md:w-36 md:text-xl">
             Login
-          </ButtonSolid>
+          </button>
           <ButtonSolid
             height="h-6 firefox:h-7 sm:h-9 md:h-10"
             width="firefox:w-20 w-14 sm:w-28 md:w-36"
