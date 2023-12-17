@@ -3,7 +3,7 @@ import Footer from '../welcome/Footer';
 
 function Signup() {
   return (
-    <div className=" sm:grid sm:grid-cols-[56%_44%] sm:grid-rows-[7dvh_88dvh] sm:items-center">
+    <div className=" overflow-hidden sm:grid sm:grid-cols-[56%_44%] sm:grid-rows-[7dvh_88dvh] sm:items-center">
       <div className="col-span-2 self-start">
         <Header
           linkToSolid="/welcome"
@@ -24,13 +24,13 @@ function Signup() {
           type="image/webp"
         />
         <img
-          className="mt-20 scale-[1.1] sm:mt-8 sm:scale-[2.2] md:scale-[1.5]"
+          className="mt-12 scale-[1.1] firefox:mt-20 sm:mt-8 sm:scale-[2.2] md:scale-[1.5]"
           src="./hero-outdated.jpg"
           alt="Pastel doodle of women on typing on laptop"
           type="image/jpg"
         />
       </picture>
-      <form className="mt-24 flex flex-col items-center gap-8 self-start sm:mt-16">
+      <form className="mt-16 flex flex-col items-center gap-8 self-start firefox:mt-24 sm:mt-16 ">
         <input
           className="input-login h-10 w-[84dvw] rounded-2xl text-lg sm:h-11 sm:w-[40dvw]"
           type="text"
@@ -64,8 +64,9 @@ function Signup() {
         </button>
       </form>
       <Footer
-        position="absolute bottom-1 right-2 sm:bottom-2 sm:right-4"
-        textSize="text-lg md:text-2xl"
+        position="absolute 
+        bottom-1 firefox:bottom-1 firefox:right-2 sm:bottom-2 sm:right-4"
+        textSize="text-sm firefox:text-lg sm:text-xl"
       />
     </div>
   );
