@@ -8,6 +8,7 @@ function Header({
   solidText = 'Create Account',
   linkToOutline = '/login',
   linkToSolid = '/signup',
+  textSize = 'text-xs firefox:text-sm sm:text-2xl',
 }) {
   return (
     <header className=" relative h-10 w-full bg-pale-blue sm:h-16">
@@ -26,6 +27,7 @@ function Header({
             height="h-8 sm:h-12"
             width="w-28 firefox:w-32 sm:w-56"
             linkTo={linkToSolid}
+            textSize={textSize}
           >
             {solidText}
           </ButtonSolid>
