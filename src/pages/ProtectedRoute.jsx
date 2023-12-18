@@ -1,19 +1,27 @@
 import { useNavigate } from 'react-router-dom';
-import { useAuth } from '../contexts/FakeAuthContext';
+import { useUser } from '../services/useUser';
+import MoonLoader from 'react-spinners/MoonLoader';
 import { useEffect } from 'react';
 
 function ProtectedRoute({ children }) {
-  const { isAuthenticated } = useAuth();
+  const { isLoading, isAuthenticated } = useUser();
   const navigate = useNavigate();
 
   useEffect(
     function () {
-      if (!isAuthenticated) navigate('/');
+      if (!isAuthenticated && !isLoading) navigate('/login');
     },
-    [isAuthenticated, navigate],
+    [isAuthenticated, isLoading, navigate],
   );
 
-  return isAuthenticated ? children : null;
+  if (isLoading)
+    return (
+      <div className="flex h-[100dvh] items-center justify-center bg-flash-white">
+        <MoonLoader color={'#13AEAE'} size={100} />
+      </div>
+    );
+
+  if (isAuthenticated) return children;
 }
 
 export default ProtectedRoute;

@@ -27,6 +27,7 @@ This is my final project for CS50x.
 - React Hook Form
 - React Icons
 - React Hot Toast
+- React Spinners
 
 ## Author
 
