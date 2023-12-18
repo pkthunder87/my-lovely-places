@@ -29,7 +29,7 @@ function PageNotFound() {
           type="image/jpg"
         />
       </picture>
-      <h1 className="absolute left-[49%] top-[60%] -translate-x-1/2 -translate-y-1/2 transform text-xl font-bold text-periwinkle firefox:top-[66%] firefox:text-2xl sm:top-[40%] firefox:sm:top-[40%] firefox:sm:text-4xl  lg:text-4xl xl:text-5xl">
+      <h1 className="absolute left-[49%] top-[60%] -translate-x-1/2 -translate-y-1/2 transform text-xl font-bold text-periwinkle firefox:top-[66%] firefox:text-2xl sm:top-[40%] sm:text-4xl firefox:sm:top-[40%]   lg:text-4xl xl:text-5xl">
         Page not Found
       </h1>
       <Footer />

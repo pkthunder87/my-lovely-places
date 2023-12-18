@@ -1,8 +1,34 @@
+import { useEffect, useState } from 'react';
+
+import { useAuth } from '../../contexts/FakeAuthContext';
+
 import ButtonSolid from '../../ui/ButtonSolid';
 import Header from '../../ui/Header';
 import Footer from '../welcome/Footer';
+import { useNavigate } from 'react-router-dom';
 
 function Login() {
+  const [email, setEmail] = useState('paula@example.com');
+  const [password, setPassword] = useState('pass1234');
+
+  const { login, isAuthenticated } = useAuth();
+  const navigate = useNavigate();
+
+  function handleSubmit(e) {
+    e.preventDefault();
+
+    if (email && password) {
+      login(email, password);
+    }
+  }
+
+  useEffect(
+    function () {
+      if (isAuthenticated) navigate('/appmap', { replace: true });
+    },
+    [isAuthenticated, navigate],
+  );
+
   return (
     <div>
       <div className="relative overflow-x-hidden">
@@ -15,6 +41,7 @@ function Login() {
           className="absolute left-[69.5%] top-[63%]
       z-10 flex -translate-x-1/2 -translate-y-1/2 transform flex-col items-center gap-3  firefox:left-[69%] firefox:top-[62%]
        sm:left-[71.5%]  sm:top-[47%] sm:gap-4 firefox:sm:left-[71.5%] firefox:sm:mt-2 md:left-[71.5%] md:top-[43%]"
+          onSubmit={handleSubmit}
         >
           <input
             className="input-login w-36 firefox:w-52 sm:w-56 firefox:sm:w-56 md:w-80"
@@ -22,13 +49,17 @@ function Login() {
             id="email"
             name="email"
             placeholder="Email Address"
+            onChange={(e) => setEmail(e.target.value)}
+            value={email}
           />
           <input
             className="input-login  w-36 firefox:w-52 sm:w-56 firefox:sm:w-56 md:w-80"
-            type="text"
+            type="password"
             id="password"
             name="password"
             placeholder="Password"
+            onChange={(e) => setPassword(e.target.value)}
+            value={password}
           />
           <div className="flex flex-col gap-2 firefox:mt-4 md:mt-8 md:gap-4">
             <button className="button-general h-6 w-16 bg-tint-teal text-xs font-bold firefox:h-7 firefox:w-20 firefox:text-sm sm:h-9 sm:w-28 sm:text-base md:h-10 md:w-36 md:text-xl">

@@ -47,14 +47,14 @@ function Signup() {
         />
         <input
           className="input-login h-10 w-[84dvw] rounded-2xl text-lg sm:h-11 sm:w-[40dvw]"
-          type="text"
+          type="password"
           id="password"
           name="password"
           placeholder="Password"
         />
         <input
           className="input-login h-10 w-[84dvw] rounded-2xl text-lg sm:h-11 sm:w-[40dvw]"
-          type="text"
+          type="password"
           id="confirm_password"
           name="confirm_password"
           placeholder="Confirm Password"
