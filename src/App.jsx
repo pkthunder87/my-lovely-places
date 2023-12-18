@@ -1,5 +1,6 @@
 import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
 import { AuthProvider } from './contexts/FakeAuthContext';
+import { QueryClient } from '@tanstack/react-query';
 
 import Welcome from './pages/welcome/Welcome';
 import Login from './pages/login/Login';
@@ -11,6 +12,14 @@ import AppLayout from './pages/AppLayout';
 import AppEntries from './pages/appEntries/AppEntries';
 import AppFilter from './pages/appFilter/AppFilter';
 import AppForm from './pages/AppForm';
+
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      staleTime: 20 * 1000,
+    },
+  },
+});
 
 function App() {
   return (
