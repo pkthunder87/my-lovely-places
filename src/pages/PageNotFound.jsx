@@ -14,17 +14,17 @@ function PageNotFound() {
       <picture className="relative">
         <source
           media="(max-width:441px)"
-          srcSet="./not-found-mobile.webp"
+          srcSet="/not-found-mobile.webp"
           type="image/webp"
         />
         <source
           media="(min-width:442px)"
-          srcSet="./not-found-desktop.webp"
+          srcSet="/not-found-desktop.webp"
           type="image/webp"
         />
         <img
           className="mt-[calc(100dvh/3)] scale-150 sm:mt-12 sm:scale-100"
-          src="./not-found-outdated.jpg"
+          src="/not-found-outdated.jpg"
           alt="Pastel doodle of a man and women with magnifying glasses"
           type="image/jpg"
         />

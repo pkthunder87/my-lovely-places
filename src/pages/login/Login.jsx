@@ -24,7 +24,7 @@ function Login() {
 
   useEffect(
     function () {
-      if (isAuthenticated) navigate('/appmap', { replace: true });
+      if (isAuthenticated) navigate('/app/map', { replace: true });
     },
     [isAuthenticated, navigate],
   );

@@ -6,6 +6,11 @@ import Login from './pages/login/Login';
 import Signup from './pages/signup/Signup';
 import PageNotFound from './pages/PageNotFound';
 import AppMap from './pages/appMap/AppMap';
+import ProtectedRoute from './pages/ProtectedRoute';
+import AppLayout from './pages/AppLayout';
+import AppEntries from './pages/appEntries/AppEntries';
+import AppFilter from './pages/appFilter/AppFilter';
+import AppForm from './pages/AppForm';
 
 function App() {
   return (
@@ -17,7 +22,20 @@ function App() {
             <Route path="/welcome" element={<Welcome />} />
             <Route path="/login" element={<Login />} />
             <Route path="/signup" element={<Signup />} />
-            <Route path="/appmap" element={<AppMap />} />
+            <Route
+              path="app"
+              element={
+                <ProtectedRoute>
+                  <AppLayout />
+                </ProtectedRoute>
+              }
+            >
+              <Route index element={<Navigate replace to="map" />} />
+              <Route index path="map" element={<AppMap />} />
+              <Route path="form" element={<AppForm />} />
+              <Route path="entries" element={<AppEntries />} />
+              <Route path="filter" element={<AppFilter />} />
+            </Route>
             <Route path="*" element={<PageNotFound />} />
           </Routes>
         </BrowserRouter>
