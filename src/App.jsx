@@ -1,19 +1,22 @@
+import { Suspense, lazy } from 'react';
 import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
-import { AuthProvider } from './contexts/FakeAuthContext';
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { Toaster } from 'react-hot-toast';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
-import Welcome from './pages/welcome/Welcome';
-import Login from './pages/login/Login';
-import Signup from './pages/signup/Signup';
-import PageNotFound from './pages/PageNotFound';
-import AppMap from './pages/appMap/AppMap';
-import ProtectedRoute from './pages/ProtectedRoute';
-import AppLayout from './pages/AppLayout';
-import AppEntries from './pages/appEntries/AppEntries';
-import AppFilter from './pages/appFilter/AppFilter';
-import AppForm from './pages/AppForm';
+import { AuthProvider } from './contexts/FakeAuthContext';
+import LoaderFullPage from './ui/LoaderFullPage';
+
+const ProtectedRoute = lazy(() => import('./pages/ProtectedRoute'));
+const Welcome = lazy(() => import('./pages/welcome/Welcome'));
+const Login = lazy(() => import('./pages/login/Login'));
+const Signup = lazy(() => import('./pages/signup/Signup'));
+const PageNotFound = lazy(() => import('./pages/PageNotFound'));
+const AppLayout = lazy(() => import('./pages/AppLayout'));
+const AppMap = lazy(() => import('./pages/appMap/AppMap'));
+const AppEntries = lazy(() => import('./pages/appEntries/AppEntries'));
+const AppFilter = lazy(() => import('./pages/appFilter/AppFilter'));
+const AppForm = lazy(() => import('./pages/AppForm'));
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -32,27 +35,29 @@ function App() {
 
       <AuthProvider>
         <BrowserRouter>
-          <Routes>
-            <Route index element={<Navigate replace to="/welcome" />} />
-            <Route path="/welcome" element={<Welcome />} />
-            <Route path="/login" element={<Login />} />
-            <Route path="/signup" element={<Signup />} />
-            <Route
-              path="app"
-              element={
-                <ProtectedRoute>
-                  <AppLayout />
-                </ProtectedRoute>
-              }
-            >
-              <Route index element={<Navigate replace to="map" />} />
-              <Route index path="map" element={<AppMap />} />
-              <Route path="form" element={<AppForm />} />
-              <Route path="entries" element={<AppEntries />} />
-              <Route path="filter" element={<AppFilter />} />
-            </Route>
-            <Route path="*" element={<PageNotFound />} />
-          </Routes>
+          <Suspense fallback={<LoaderFullPage />}>
+            <Routes>
+              <Route index element={<Navigate replace to="/welcome" />} />
+              <Route path="/welcome" element={<Welcome />} />
+              <Route path="/login" element={<Login />} />
+              <Route path="/signup" element={<Signup />} />
+              <Route
+                path="app"
+                element={
+                  <ProtectedRoute>
+                    <AppLayout />
+                  </ProtectedRoute>
+                }
+              >
+                <Route index element={<Navigate replace to="map" />} />
+                <Route index path="map" element={<AppMap />} />
+                <Route path="form" element={<AppForm />} />
+                <Route path="entries" element={<AppEntries />} />
+                <Route path="filter" element={<AppFilter />} />
+              </Route>
+              <Route path="*" element={<PageNotFound />} />
+            </Routes>
+          </Suspense>
         </BrowserRouter>
       </AuthProvider>
 

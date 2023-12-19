@@ -49,7 +49,7 @@ function Signup() {
           type="image/webp"
         />
         <img
-          className="mt-12 scale-[1.1] firefox:mt-20 sm:mt-8 sm:scale-[2.2] md:scale-[1.5]"
+          className=" relative -z-10 mt-12 scale-[1.1] firefox:mt-20 sm:mt-8 sm:scale-[2.2] md:scale-[1.5]"
           src="./hero-outdated.jpg"
           alt="Pastel doodle of women on typing on laptop"
           type="image/jpg"
@@ -57,7 +57,7 @@ function Signup() {
       </picture>
 
       <form
-        className="relative z-10 mt-16 flex flex-col items-center gap-8 self-start firefox:mt-24 sm:mt-16"
+        className=" mt-16 flex flex-col items-center gap-8 self-start firefox:mt-24 sm:mt-16"
         onSubmit={handleSubmit(onSubmit, onError)}
       >
         <input
