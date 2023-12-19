@@ -2,17 +2,25 @@ import { useForm } from 'react-hook-form';
 
 import Header from '../../ui/Header';
 import Footer from '../welcome/Footer';
+import { useSignup } from '../../services/useSignup';
 
 function Signup() {
   const {
     register,
     handleSubmit,
     getValues,
+    reset,
     formState: { errors },
   } = useForm();
+  const { signup, isPending } = useSignup();
 
-  function onSubmit(data) {
-    console.log(data);
+  function onSubmit({ username, email, password }) {
+    signup(
+      { username, email, password },
+      {
+        onSettled: reset,
+      },
+    );
   }
 
   function onError() {
@@ -54,6 +62,7 @@ function Signup() {
       >
         <input
           className="input-login h-10 w-[84dvw] rounded-2xl text-lg sm:h-11 sm:w-[40dvw]"
+          disabled={isPending}
           type="text"
           id="username"
           name="username"
@@ -71,6 +80,7 @@ function Signup() {
 
         <input
           className="input-login h-10 w-[84dvw] rounded-2xl text-lg sm:h-11 sm:w-[40dvw]"
+          disabled={isPending}
           type="text"
           id="email"
           name="email"
@@ -94,6 +104,7 @@ function Signup() {
 
         <input
           className="input-login h-10 w-[84dvw] rounded-2xl text-lg sm:h-11 sm:w-[40dvw]"
+          disabled={isPending}
           type="password"
           id="password"
           name="password"
@@ -115,6 +126,7 @@ function Signup() {
 
         <input
           className="input-login h-10 w-[84dvw] rounded-2xl text-lg sm:h-11 sm:w-[40dvw]"
+          disabled={isPending}
           type="password"
           id="confirm_password"
           name="confirm_password"
@@ -132,7 +144,10 @@ function Signup() {
           </small>
         )}
 
-        <button className="button-general h-10 w-[35dvw] bg-tint-teal text-lg sm:h-11 sm:w-[20dvw] sm:text-xl">
+        <button
+          className="button-general h-10 w-[35dvw] bg-tint-teal text-lg sm:h-11 sm:w-[20dvw] sm:text-xl"
+          disabled={isPending}
+        >
           Create Account
         </button>
       </form>
