@@ -1,8 +1,10 @@
 import ButtonSolid from './ButtonSolid';
 import ButtonOutline from './ButtonOutline';
+import Logout from './Logout';
 
 function Header({
   noLogin = true,
+  noLogout = true,
   noCreate = false,
   outlineText = 'Login',
   solidText = 'Create Account',
@@ -13,6 +15,7 @@ function Header({
   return (
     <header className=" relative h-10 w-full bg-pale-blue sm:h-16">
       <nav>
+        {noLogout || <Logout />}
         {noLogin || (
           <ButtonOutline
             height="h-8 sm:h-12"

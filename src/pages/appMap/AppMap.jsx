@@ -2,8 +2,6 @@ import { NavLink, useNavigate } from 'react-router-dom';
 
 import { useAuth } from '../../contexts/FakeAuthContext';
 import Header from '../../ui/Header';
-import { getCabins } from '../../services/apiCabins';
-import { useQuery } from '@tanstack/react-query';
 
 function AppMap() {
   const { logout } = useAuth();
@@ -18,19 +16,10 @@ function AppMap() {
   //   getCabins().then((data) => console.log(data));
   // }, []);
 
-  const {
-    isLoading,
-    data: cabins,
-    error,
-  } = useQuery({
-    queryKey: ['cabin'],
-    queryFn: getCabins,
-  });
-
   return (
     <div>
       <Header
-        noLogin={false}
+        noLogout={false}
         linkToSolid="/welcome"
         solidText="Home"
         outlineText="Logout"

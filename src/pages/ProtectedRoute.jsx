@@ -1,23 +1,23 @@
 import { useNavigate } from 'react-router-dom';
 import { useUser } from '../services/useUser';
-import MoonLoader from 'react-spinners/MoonLoader';
+import PuffLoader from 'react-spinners/PuffLoader';
 import { useEffect } from 'react';
 
 function ProtectedRoute({ children }) {
-  const { isLoading, isAuthenticated } = useUser();
+  const { isPending, isAuthenticated } = useUser();
   const navigate = useNavigate();
 
   useEffect(
     function () {
-      if (!isAuthenticated && !isLoading) navigate('/login');
+      if (!isAuthenticated && !isPending) navigate('/login');
     },
-    [isAuthenticated, isLoading, navigate],
+    [isAuthenticated, isPending, navigate],
   );
 
-  if (isLoading)
+  if (isPending)
     return (
       <div className="flex h-[100dvh] items-center justify-center bg-flash-white">
-        <MoonLoader color={'#13AEAE'} size={100} />
+        <PuffLoader color={'#13AEAE'} size={400} />
       </div>
     );
 

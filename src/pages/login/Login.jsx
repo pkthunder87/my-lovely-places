@@ -4,12 +4,13 @@ import ButtonSolid from '../../ui/ButtonSolid';
 import Header from '../../ui/Header';
 import Footer from '../welcome/Footer';
 import { useLogin } from '../../services/useLogin';
+import PuffLoader from 'react-spinners/PuffLoader';
 
 function Login() {
   const [email, setEmail] = useState('paul@example.com');
   const [password, setPassword] = useState('pass1234');
 
-  const { login, isLoading } = useLogin();
+  const { login, isPending } = useLogin();
 
   function handleSubmit(e) {
     e.preventDefault();
@@ -56,7 +57,7 @@ function Login() {
             placeholder="Email Address"
             onChange={(e) => setEmail(e.target.value)}
             value={email}
-            disabled={isLoading}
+            disabled={isPending}
           />
           <input
             className="input-login  w-36 firefox:w-52 sm:w-56 firefox:sm:w-56 md:w-80"
@@ -67,11 +68,11 @@ function Login() {
             placeholder="Password"
             onChange={(e) => setPassword(e.target.value)}
             value={password}
-            disabled={isLoading}
+            disabled={isPending}
           />
           <div className="flex flex-col gap-2 firefox:mt-4 md:mt-8 md:gap-4">
             <button className="button-general h-6 w-16 bg-tint-teal text-xs font-bold firefox:h-7 firefox:w-20 firefox:text-sm sm:h-9 sm:w-28 sm:text-base md:h-10 md:w-36 md:text-xl">
-              Login
+              {!isPending ? 'Login' : <PuffLoader size={35} color={'#FFF'} />}
             </button>
             <ButtonSolid
               height="h-6 firefox:h-7 sm:h-9 md:h-10"
