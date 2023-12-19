@@ -1,7 +1,24 @@
+import { useForm } from 'react-hook-form';
+
 import Header from '../../ui/Header';
 import Footer from '../welcome/Footer';
 
 function Signup() {
+  const {
+    register,
+    handleSubmit,
+    getValues,
+    formState: { errors },
+  } = useForm();
+
+  function onSubmit(data) {
+    console.log(data);
+  }
+
+  function onError() {
+    console.log('Failed Account Creation');
+  }
+
   return (
     <div className=" overflow-hidden sm:grid sm:grid-cols-[56%_44%] sm:grid-rows-[7dvh_88dvh] sm:items-center">
       <div className="col-span-2 self-start">
@@ -30,35 +47,91 @@ function Signup() {
           type="image/jpg"
         />
       </picture>
-      <form className="mt-16 flex flex-col items-center gap-8 self-start firefox:mt-24 sm:mt-16 ">
+
+      <form
+        className="relative z-10 mt-16 flex flex-col items-center gap-8 self-start firefox:mt-24 sm:mt-16"
+        onSubmit={handleSubmit(onSubmit, onError)}
+      >
+        <input
+          className="input-login h-10 w-[84dvw] rounded-2xl text-lg sm:h-11 sm:w-[40dvw]"
+          type="text"
+          id="username"
+          name="username"
+          autoComplete="username"
+          placeholder="Username"
+          {...register('username', {
+            required: 'Field input required',
+          })}
+        />
+        {errors?.username?.message && (
+          <small className=" -mt-6 mb-4 h-2  text-center text-base  font-normal text-red-400">
+            {errors?.username.message}
+          </small>
+        )}
+
         <input
           className="input-login h-10 w-[84dvw] rounded-2xl text-lg sm:h-11 sm:w-[40dvw]"
           type="text"
           id="email"
           name="email"
+          autoComplete="email"
           placeholder="Email Address"
+          {...register('email', {
+            required: 'Field input required',
+            validate: {
+              // Email validation from https://catalins.tech/react-forms-with-react-hook-form/
+              matchPattern: (v) =>
+                /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(v) ||
+                'Valid email required',
+            },
+          })}
         />
-        <input
-          className="input-login h-10 w-[84dvw] rounded-2xl text-lg sm:h-11 sm:w-[40dvw]"
-          type="text"
-          id="confirm_email"
-          name="confirm_email"
-          placeholder="Confirm Email"
-        />
+        {errors?.email?.message && (
+          <small className=" -mt-6 mb-4 h-2  text-center text-base  font-normal text-red-400">
+            {errors?.email.message}
+          </small>
+        )}
+
         <input
           className="input-login h-10 w-[84dvw] rounded-2xl text-lg sm:h-11 sm:w-[40dvw]"
           type="password"
           id="password"
           name="password"
+          autoComplete="new-password"
           placeholder="Password"
+          {...register('password', {
+            required: 'Field input required',
+            minLength: {
+              value: 8,
+              message: 'Password must be a minimum of 8 characters',
+            },
+          })}
         />
+        {errors?.password?.message && (
+          <small className=" -mt-6 mb-4 h-2  text-center text-base  font-normal text-red-400">
+            {errors?.password.message}
+          </small>
+        )}
+
         <input
           className="input-login h-10 w-[84dvw] rounded-2xl text-lg sm:h-11 sm:w-[40dvw]"
           type="password"
           id="confirm_password"
           name="confirm_password"
+          autoComplete="new-password"
           placeholder="Confirm Password"
+          {...register('confirmPassword', {
+            required: 'Field input required',
+            validate: (value) =>
+              value === getValues().password || 'Must have matching passwords',
+          })}
         />
+        {errors?.confirmPassword?.message && (
+          <small className=" -mt-6 mb-4 h-2  text-center text-base  font-normal text-red-400">
+            {errors?.confirmPassword.message}
+          </small>
+        )}
+
         <button className="button-general h-10 w-[35dvw] bg-tint-teal text-lg sm:h-11 sm:w-[20dvw] sm:text-xl">
           Create Account
         </button>
