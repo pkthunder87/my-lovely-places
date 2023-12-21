@@ -21,7 +21,7 @@ const AppForm = lazy(() => import('./pages/AppForm'));
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
-      staleTime: 0,
+      staleTime: 10 * 1000,
     },
   },
 });
