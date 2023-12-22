@@ -28,3 +28,24 @@ html {
   height: 100%;
   width: 100%;
 } */
+
+.leaflet-popup-content-wrapper,
+.leaflet-popup-tip {
+  @apply bg-pale-blue text-white;
+}
+
+.leaflet-popup-tip-container {
+  @apply mt-[-12px];
+}
+
+.leaflet-popup-content-wrapper {
+  @apply border-l-8 border-tint-teal p-0;
+}
+
+.leaflet-popup-close-button {
+  @apply mt-3;
+}
+
+.leaflet-container a.leaflet-popup-close-button {
+  @apply text-tint-teal;
+}

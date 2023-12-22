@@ -23,6 +23,7 @@ export default {
         'tint-teal': '#13AEAE',
         sunshine: '#FED600',
         cream: '#FFFDD4',
+        'sign-blue': '#0081D0'
       },
     },
   },
