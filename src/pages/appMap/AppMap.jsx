@@ -5,6 +5,8 @@ import { useAuth } from '../../contexts/FakeAuthContext';
 
 import { MapContainer, Marker, Popup, TileLayer } from 'react-leaflet';
 import { useState } from 'react';
+import EntryForm from './EntryForm';
+import NavApp from '../../ui/NavApp';
 
 const cities = [
   {
@@ -63,7 +65,10 @@ function AppMap() {
 
   return (
     <div className="h-[100dvh] w-[100-dvw] sm:grid sm:grid-cols-[35%_65%] md:grid-cols-[27%_73%]">
-      <div className="bg-tint-teal">Left Side</div>
+      <div className="flex flex-col items-center justify-center gap-8 bg-tint-teal">
+        <EntryForm />
+        <NavApp />
+      </div>
       <div className="h-full w-full bg-white">
         <MapContainer
           center={mapPosition}
@@ -87,9 +92,7 @@ function AppMap() {
                       <MdFastfood />
                     </div>
                   </div>
-                  <p className=" text-[16px] font-bold text-tint-teal">
-                    Location
-                  </p>
+                  <p className=" text-[16px] font-bold text-white">Location</p>
                 </div>
               </Popup>
             </Marker>

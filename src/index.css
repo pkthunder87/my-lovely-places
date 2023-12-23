@@ -39,7 +39,7 @@ html {
 }
 
 .leaflet-popup-content-wrapper {
-  @apply border-l-8 border-tint-teal p-0;
+  @apply border-accent-teal border-l-8 p-0;
 }
 
 .leaflet-popup-close-button {
@@ -47,5 +47,5 @@ html {
 }
 
 .leaflet-container a.leaflet-popup-close-button {
-  @apply text-tint-teal;
+  @apply text-accent-teal;
 }

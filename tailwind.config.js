@@ -21,9 +21,10 @@ export default {
         'saira-red': '#FFA0B5',
         'heavy-blue': '#142D54',
         'tint-teal': '#13AEAE',
+        'accent-teal': '#5ac6c6',
         sunshine: '#FED600',
         cream: '#FFFDD4',
-        'sign-blue': '#0081D0'
+        'sign-blue': '#0081D0',
       },
     },
   },
