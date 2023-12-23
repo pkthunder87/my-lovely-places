@@ -6,6 +6,10 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
 import { AuthProvider } from './contexts/FakeAuthContext';
 import LoaderFullPage from './ui/LoaderFullPage';
+import EntryForm from './pages/appMap/EntryForm';
+import EntryList from './pages/appMap/EntryList';
+import EntryItem from './pages/appMap/EntryItem';
+import Entry from './pages/appMap/Entry';
 
 const ProtectedRoute = lazy(() => import('./pages/ProtectedRoute'));
 const Welcome = lazy(() => import('./pages/welcome/Welcome'));
@@ -49,9 +53,14 @@ function App() {
                   </ProtectedRoute>
                 }
               >
-                <Route index element={<Navigate replace to="map" />} />
-                <Route index path="map" element={<AppMap />} />
-                <Route path="form" element={<AppForm />} />
+                <Route index element={<Navigate replace to="map/entries" />} />
+
+                <Route path="map" element={<AppMap />}>
+                  <Route index path="entries" element={<EntryList />} />
+                  <Route path="entries/:id" element={<Entry />} />
+                  <Route path="form" element={<EntryForm />} />
+                </Route>
+
                 <Route path="entries" element={<AppEntries />} />
                 <Route path="filter" element={<AppFilter />} />
               </Route>
