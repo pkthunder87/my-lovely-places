@@ -1,9 +1,54 @@
+import { useEffect, useState } from 'react';
 import locations from '../../data/locations';
 import moods from '../../data/moods';
+import { useUrlPosition } from '../../hooks/useUrlPosition';
+
+const locationIqKey = import.meta.env.VITE_LOCATION_IQ_KEY;
 
 function EntryForm() {
+  const [lat, lng] = useUrlPosition();
+  const [date, setDate] = useState(new Date());
+  const [notes, setNotes] = useState('');
+
+  const [isLoadingGeocoding, setIsLoadingGeocoding] = useState(false);
+  const [cityName, setCityName] = useState('');
+  const [countryName, setCountryName] = useState('');
+
+  const BASE_URL = 'https://us1.locationiq.com/v1/reverse';
+
+  useEffect(() => {
+    async function fetchCityData() {
+      try {
+        setIsLoadingGeocoding(true);
+        const res = await fetch(
+          `${BASE_URL}?key=${locationIqKey}&lat=${lat}&lon=${lng}&format=json`,
+        );
+        const data = await res.json();
+
+        console.log(data);
+
+        // console.log(
+        //   data.address.city,
+        //   data.address.state,
+        //   data.address.country,
+        //   data.display_name,
+        // );
+
+        if (data.error) return;
+
+        setCityName(data.display_name.split(', ', 1));
+        setCountryName(data.address.country);
+      } catch (err) {
+        throw new Error();
+      } finally {
+        setIsLoadingGeocoding(false);
+      }
+    }
+    fetchCityData();
+  }, [lat, lng]);
+
   return (
-    <div className="bg-accent-teal flex h-[90%] w-[90%] flex-col items-center justify-center rounded-xl drop-shadow-lg">
+    <div className="flex h-[90%] w-[90%] flex-col items-center justify-center rounded-xl bg-accent-teal drop-shadow-lg">
       <form className=" -ml-2 mt-8 flex h-full w-[90%] flex-col items-center gap-6">
         <input
           className="input-login h-10 w-full rounded-xl text-lg "
@@ -86,7 +131,7 @@ function EntryForm() {
           placeholder="Current Location"
         ></textarea>
         <div className=" flex gap-8">
-          <button className="button-general bg-accent-teal h-10 w-32 border-2 ">
+          <button className="button-general h-10 w-32 border-2 bg-accent-teal ">
             Save Draft
           </button>
           <button className="button-general h-10 w-32 bg-tint-teal drop-shadow-md">
