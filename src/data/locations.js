@@ -12,7 +12,7 @@ const locations = [
   'landmark',
   'park',
   'restaurant',
-  'shopping',
+  'store',
   'sightseeing',
   'significant_other',
   'theatre',

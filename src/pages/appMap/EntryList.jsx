@@ -4,7 +4,14 @@ import EntryItem from './EntryItem';
 import { FaChevronLeft } from 'react-icons/fa6';
 import { FaChevronRight } from 'react-icons/fa6';
 
+import { useEffect } from 'react';
+import { getEntries } from '../../services/apiEntries';
+
 function EntryList() {
+  useEffect(function () {
+    getEntries().then((data) => console.log(data));
+  }, []);
+
   return (
     <>
       <form className=" w-[80%]">

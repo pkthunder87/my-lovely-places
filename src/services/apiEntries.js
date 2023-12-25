@@ -1,7 +1,7 @@
 import supabase from './supabase';
 
-export async function getCabins() {
-  let { data, error } = await supabase.from('cabin').select('*');
+export async function getEntries() {
+  let { data, error } = await supabase.from('entries').select('*');
 
   if (error) {
     console.error(error);
