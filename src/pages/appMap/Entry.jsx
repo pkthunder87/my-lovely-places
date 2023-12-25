@@ -12,7 +12,7 @@ import SecondaryMoods from './SecondaryMoods';
 function Entry() {
   const { id } = useParams();
   const entry = fakeEntries.filter((entry) => +id === entry.id)[0];
-  console.log(entry);
+
   const entryShorten =
     entry.entry_text.length < 34
       ? entry.entry_text
