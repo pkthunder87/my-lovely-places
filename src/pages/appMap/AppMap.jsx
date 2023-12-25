@@ -15,7 +15,7 @@ function AppMap() {
 
   return (
     <div className="h-[100dvh] w-[100-dvw] sm:grid sm:grid-cols-[35%_65%] md:grid-cols-[27%_73%]">
-      <div className="flex flex-col items-center justify-center gap-8 bg-tint-teal">
+      <div className="flex flex-col items-center justify-between bg-tint-teal">
         <Outlet />
         <NavApp />
       </div>

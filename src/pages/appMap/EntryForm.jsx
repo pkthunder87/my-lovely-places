@@ -1,7 +1,11 @@
 import { useEffect, useState } from 'react';
+import MoonLoader from 'react-spinners/MoonLoader';
+
 import locations from '../../data/locations';
 import moods from '../../data/moods';
 import { useUrlPosition } from '../../hooks/useUrlPosition';
+
+const BASE_URL = 'https://us1.locationiq.com/v1/reverse';
 
 const locationIqKey = import.meta.env.VITE_LOCATION_IQ_KEY;
 
@@ -11,15 +15,18 @@ function EntryForm() {
   const [notes, setNotes] = useState('');
 
   const [isLoadingGeocoding, setIsLoadingGeocoding] = useState(false);
+  const [displayName, setDisplayName] = useState('');
   const [cityName, setCityName] = useState('');
   const [countryName, setCountryName] = useState('');
-
-  const BASE_URL = 'https://us1.locationiq.com/v1/reverse';
+  const [geoCodingError, setGeocodingError] = useState('');
 
   useEffect(() => {
+    if (!lat && !lng) return;
+
     async function fetchCityData() {
       try {
         setIsLoadingGeocoding(true);
+        setGeocodingError('');
         const res = await fetch(
           `${BASE_URL}?key=${locationIqKey}&lat=${lat}&lon=${lng}&format=json`,
         );
@@ -34,12 +41,17 @@ function EntryForm() {
         //   data.display_name,
         // );
 
-        if (data.error) return;
+        if (data.error) throw new Error('That is not a valid a location.');
 
-        setCityName(data.display_name.split(', ', 1));
-        setCountryName(data.address.country);
+        const address = data.address;
+
+        setDisplayName(data.display_name);
+
+        setCityName(address.city || address.village || address.town || '');
+
+        setCountryName(address.country);
       } catch (err) {
-        throw new Error();
+        setGeocodingError(err.message);
       } finally {
         setIsLoadingGeocoding(false);
       }
@@ -47,8 +59,23 @@ function EntryForm() {
     fetchCityData();
   }, [lat, lng]);
 
+  if (isLoadingGeocoding)
+    return (
+      <div className="flex h-[90%] w-[90%] flex-col items-center justify-center rounded-xl bg-accent-teal text-base text-white drop-shadow-lg">
+        <MoonLoader color={'#fff'} size={125} />
+      </div>
+    );
+
+  if (geoCodingError)
+    return (
+      <div className="flex h-[90%] w-[90%] flex-col items-center justify-center rounded-xl bg-accent-teal text-base text-white drop-shadow-lg">
+        <p>{geoCodingError}</p>
+        <p>Please click on a valid location on the map.</p>
+      </div>
+    );
+
   return (
-    <div className="flex h-[90%] w-[90%] flex-col items-center justify-center rounded-xl bg-accent-teal drop-shadow-lg">
+    <div className="mt-8 flex h-[90%] w-[90%] flex-col items-center justify-center rounded-xl bg-accent-teal drop-shadow-lg">
       <form className=" -ml-2 mt-8 flex h-full w-[90%] flex-col items-center gap-6">
         <input
           className="input-login h-10 w-full rounded-xl text-lg "

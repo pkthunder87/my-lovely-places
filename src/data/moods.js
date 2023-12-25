@@ -10,6 +10,7 @@ const moods = [
   'pain',
   'disgust',
   'relaxed',
+  'entertain',
 ];
 
 export default moods;

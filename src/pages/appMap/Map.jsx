@@ -7,7 +7,7 @@ import {
   useMapEvents,
 } from 'react-leaflet';
 import { useEffect, useState } from 'react';
-import { useNavigate, useSearchParams } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 import { MdFastfood } from 'react-icons/md';
 
@@ -62,7 +62,6 @@ function Map() {
   const [mapPosition, setMapPosition] = useState([40, 0]);
   const navigate = useNavigate();
 
-  const [searchParams] = useSearchParams();
   const {
     isLoading: isLoadingPosition,
     position: geolocationPosition,

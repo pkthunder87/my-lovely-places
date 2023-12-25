@@ -17,6 +17,7 @@ export default {
         'flash-white': '#E6E9EF',
         'pale-blue': '#B4CBF0',
         periwinkle: '#B4ADEA',
+        violet: '#8A1CCE',
         'davy-gray': '#50514F',
         'saira-red': '#FFA0B5',
         'heavy-blue': '#142D54',

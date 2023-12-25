@@ -8,7 +8,6 @@ import { AuthProvider } from './contexts/FakeAuthContext';
 import LoaderFullPage from './ui/LoaderFullPage';
 import EntryForm from './pages/appMap/EntryForm';
 import EntryList from './pages/appMap/EntryList';
-import EntryItem from './pages/appMap/EntryItem';
 import Entry from './pages/appMap/Entry';
 
 const ProtectedRoute = lazy(() => import('./pages/ProtectedRoute'));
@@ -20,7 +19,6 @@ const AppLayout = lazy(() => import('./pages/AppLayout'));
 const AppMap = lazy(() => import('./pages/appMap/AppMap'));
 const AppEntries = lazy(() => import('./pages/appEntries/AppEntries'));
 const AppFilter = lazy(() => import('./pages/appFilter/AppFilter'));
-const AppForm = lazy(() => import('./pages/AppForm'));
 
 const queryClient = new QueryClient({
   defaultOptions: {
