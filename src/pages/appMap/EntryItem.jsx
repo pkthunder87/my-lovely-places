@@ -1,6 +1,9 @@
 import { MdFastfood } from 'react-icons/md';
 import { NavLink } from 'react-router-dom';
 import fakeEntries from '../../data/fakeEntries';
+import { moods, moodColor } from '../../data/moods';
+
+const moodsColor = moodColor;
 
 function EntryItem({ entry }) {
   const { id, date, location, user, position } = entry;
@@ -20,7 +23,11 @@ function EntryItem({ entry }) {
       >
         <div className="mt-[2px] grid h-[7%] w-full grid-cols-[24%_42%_34%] rounded-3xl bg-transparent text-white drop-shadow-lg">
           <div className="flex  items-center justify-center ">
-            <div className="bg-violet flex h-[3.2rem] w-[3.2rem] items-center justify-center rounded-full">
+            <div
+              className={`flex h-[3.2rem] w-[3.2rem] items-center justify-center rounded-full ${
+                moodsColor[`${entry.primary_mood}`]
+              } `}
+            >
               <div className="text-[2rem] ">
                 <MdFastfood />
               </div>
@@ -33,7 +40,11 @@ function EntryItem({ entry }) {
 
           <div className="flex flex-col items-center justify-center gap-1">
             <div>{entry.date}</div>
-            <div className="bg-violet rounded-full pl-2 pr-2">
+            <div
+              className={`rounded-full ${
+                moodsColor[`${entry.primary_mood}`]
+              } pl-2 pr-2`}
+            >
               {entry.primary_mood}
             </div>
           </div>

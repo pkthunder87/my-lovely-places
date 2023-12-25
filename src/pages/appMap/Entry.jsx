@@ -8,6 +8,9 @@ import { FaChevronRight } from 'react-icons/fa6';
 
 import fakeEntries from '../../data/fakeEntries';
 import SecondaryMoods from './SecondaryMoods';
+import { moodColor } from '../../data/moods';
+
+const moodsColor = moodColor;
 
 function Entry() {
   const { id } = useParams();
@@ -22,7 +25,7 @@ function Entry() {
     <>
       <div className="mt-6 grid h-[7%] w-[90%] grid-cols-[24%_42%_34%] rounded-3xl bg-accent-teal text-white drop-shadow-lg">
         <div className="flex  items-center justify-center ">
-          <div className="bg-violet flex h-[3.2rem] w-[3.2rem] items-center justify-center rounded-full">
+          <div className="flex h-[3.2rem] w-[3.2rem] items-center justify-center rounded-full bg-violet">
             <div className="text-[2rem] ">
               <MdFastfood />
             </div>
@@ -35,7 +38,11 @@ function Entry() {
 
         <div className="flex flex-col items-center justify-center gap-1">
           <div>{entry.date}</div>
-          <div className="bg-violet rounded-full pl-2 pr-2">
+          <div
+            className={`rounded-full ${
+              moodsColor[`${entry.primary_mood}`]
+            } pl-2 pr-2`}
+          >
             {entry.primary_mood}
           </div>
         </div>

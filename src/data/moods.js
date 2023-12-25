@@ -1,4 +1,4 @@
-const moods = [
+export const moods = [
   'happy',
   'anger',
   'sad',
@@ -13,4 +13,17 @@ const moods = [
   'entertain',
 ];
 
-export default moods;
+export const moodColor = {
+  happy: 'bg-violet',
+  anger: 'bg-white',
+  sad: 'bg-blue-500',
+  romantic: 'bg-pink-500',
+  depressed: 'bg-black',
+  boredom: 'bg-davy-gray',
+  fear: 'bg-orange-500',
+  surprise: 'bg-sunshine',
+  pain: 'bg-periwinkle',
+  disgust: 'bg-slate-800',
+  relaxed: 'bg-pale-blue',
+  entertain: 'bg-green-500',
+};

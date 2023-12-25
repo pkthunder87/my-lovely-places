@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import MoonLoader from 'react-spinners/MoonLoader';
 
 import locations from '../../data/locations';
-import moods from '../../data/moods';
+import { moods } from '../../data/moods';
 import { useUrlPosition } from '../../hooks/useUrlPosition';
 
 const BASE_URL = 'https://us1.locationiq.com/v1/reverse';

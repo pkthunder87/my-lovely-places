@@ -10,8 +10,8 @@ const fakeEntries = [
     },
     user: 'Jenny_Waller',
 
-    primary_mood: 'entertained',
-    secondary_moods: ['Fear'],
+    primary_mood: 'entertain',
+    secondary_moods: ['fear'],
     entry_text: 'Went to watch the new horror movie. It was terrifying!',
   },
   {
@@ -25,7 +25,7 @@ const fakeEntries = [
     },
     user: 'Amy_Crocker',
 
-    primary_mood: 'Boredom',
+    primary_mood: 'boredom',
     secondary_moods: [],
     entry_text: 'Had a fairly boring day at work. Hardly any customers.',
   },
@@ -55,8 +55,8 @@ const fakeEntries = [
     },
     user: 'Jenny_Waller',
 
-    primary_mood: 'entertained',
-    secondary_moods: ['Fear'],
+    primary_mood: 'entertain',
+    secondary_moods: ['fear'],
     entry_text: 'Went to watch the new horror movie. It was terrifying!',
   },
   {
@@ -70,7 +70,7 @@ const fakeEntries = [
     },
     user: 'Amy_Crocker',
 
-    primary_mood: 'Boredom',
+    primary_mood: 'boredom',
     secondary_moods: [],
     entry_text: 'Had a fairly boring day at work. Hardly any customers.',
   },
@@ -100,8 +100,8 @@ const fakeEntries = [
     },
     user: 'Jenny_Waller',
 
-    primary_mood: 'entertained',
-    secondary_moods: ['Fear'],
+    primary_mood: 'entertain',
+    secondary_moods: ['fear'],
     entry_text: 'Went to watch the new horror movie. It was terrifying!',
   },
   {
@@ -115,7 +115,7 @@ const fakeEntries = [
     },
     user: 'Amy_Crocker',
 
-    primary_mood: 'Boredom',
+    primary_mood: 'boredom',
     secondary_moods: [],
     entry_text: 'Had a fairly boring day at work. Hardly any customers.',
   },

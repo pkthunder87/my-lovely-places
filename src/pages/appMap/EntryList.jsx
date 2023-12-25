@@ -1,5 +1,5 @@
 import fakeEntries from '../../data/fakeEntries';
-import moods from '../../data/moods';
+import { moods } from '../../data/moods';
 import EntryItem from './EntryItem';
 import { FaChevronLeft } from 'react-icons/fa6';
 import { FaChevronRight } from 'react-icons/fa6';
