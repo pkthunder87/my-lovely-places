@@ -5,7 +5,7 @@ export async function getEntries() {
 
   if (error) {
     console.error(error);
-    throw new Error('Cabins could not be loaded');
+    throw new Error('Entries could not be loaded');
   }
 
   return data;

@@ -6,11 +6,37 @@ import { FaChevronRight } from 'react-icons/fa6';
 
 import { useEffect } from 'react';
 import { getEntries } from '../../services/apiEntries';
+import { useQuery } from '@tanstack/react-query';
+import MoonLoader from 'react-spinners/MoonLoader';
+import { getLocations } from '../../services/apiLocations';
 
 function EntryList() {
-  useEffect(function () {
-    getEntries().then((data) => console.log(data));
-  }, []);
+  const {
+    isPending: isPendingEntries,
+    data: entries,
+    errorEntries,
+  } = useQuery({
+    queryKey: ['entries'],
+    queryFn: getEntries,
+  });
+
+  const {
+    isPending: isPendingLocations,
+    data: locations,
+    errorLocations,
+  } = useQuery({
+    queryKey: ['locations'],
+    queryFn: getLocations,
+  });
+
+  // Converts string coords into geolocation array positions
+  // console.log(
+  //   locations[entries[1].locationId - 1].coords
+  //     .split(', ')
+  //     .map((coord) => +coord),
+  // );
+
+  if (isPendingEntries || isPendingLocations) return <MoonLoader />;
 
   return (
     <>
@@ -54,8 +80,8 @@ function EntryList() {
 
       <div className="mt-6 flex h-[81%] w-[80%] flex-col items-center justify-between">
         <ul className="w-full list-none">
-          {fakeEntries.map((entry) => (
-            <EntryItem entry={entry} key={entry.id} />
+          {entries?.map((entry, index) => (
+            <EntryItem entry={entry} index={index} key={entry.id} />
           ))}
         </ul>
         <div className="mb-2 flex w-full justify-between text-xl text-white">

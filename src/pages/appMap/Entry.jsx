@@ -9,17 +9,43 @@ import { FaChevronRight } from 'react-icons/fa6';
 import fakeEntries from '../../data/fakeEntries';
 import SecondaryMoods from './SecondaryMoods';
 import { moodColor } from '../../data/moods';
+import { getLocations } from '../../services/apiLocations';
+import { getEntries } from '../../services/apiEntries';
+import { useQuery } from '@tanstack/react-query';
 
 const moodsColor = moodColor;
 
 function Entry() {
   const { id } = useParams();
-  const entry = fakeEntries.filter((entry) => +id === entry.id)[0];
+  const {
+    isPending: isPendingEntries,
+    data: entries,
+    errorEntries,
+  } = useQuery({
+    queryKey: ['entries'],
+    queryFn: getEntries,
+  });
+
+  const {
+    isPending: isPendingLocations,
+    data: locations,
+    errorLocations,
+  } = useQuery({
+    queryKey: ['locations'],
+    queryFn: getLocations,
+  });
+
+  const entry = entries.filter((entry) => +id === entry.id)[0];
+  // console.log(entry);
 
   const entryShorten =
-    entry.entry_text.length < 34
-      ? entry.entry_text
-      : entry.entry_text.slice(0, 34) + '...';
+    entry.entry.length < 34 ? entry.entry : entry.entry.slice(0, 20) + '...';
+
+  if (isPendingEntries || isPendingLocations) return <MoonLoader />;
+
+  const secondaryMoodList = entry.secondaryMood
+    ? entry.secondaryMood.split(', ')
+    : [];
 
   return (
     <>
@@ -40,16 +66,16 @@ function Entry() {
           <div>{entry.date}</div>
           <div
             className={`rounded-full ${
-              moodsColor[`${entry.primary_mood}`]
+              moodsColor[`${entry.primaryMood}`]
             } pl-2 pr-2`}
           >
-            {entry.primary_mood}
+            {entry.primaryMood}
           </div>
         </div>
       </div>
 
       <div className="self-start px-6">
-        <SecondaryMoods moods={entry.secondary_moods.flat()} />
+        <SecondaryMoods moods={secondaryMoodList} />
       </div>
 
       <div className="flex h-[74%] w-[90%] flex-col items-center gap-5 rounded-lg bg-accent-teal drop-shadow-lg">

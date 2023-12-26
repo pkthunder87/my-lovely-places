@@ -13,45 +13,10 @@ import { MdFastfood } from 'react-icons/md';
 
 import { useGeolocation } from '../../hooks/useGeolocation';
 import { useUrlPosition } from '../../hooks/useUrlPosition';
-
-const cities = [
-  {
-    cityName: 'Lisbon',
-    country: 'Portugal',
-    emoji: '🇵🇹',
-    date: '2027-10-31T15:59:59.138Z',
-    notes: 'My favorite city so far!',
-    position: {
-      lat: 38.727881642324164,
-      lng: -9.140900099907554,
-    },
-    id: 73930385,
-  },
-  {
-    cityName: 'Madrid',
-    country: 'Spain',
-    emoji: '🇪🇸',
-    date: '2027-07-15T08:22:53.976Z',
-    notes: '',
-    position: {
-      lat: 40.46635901755316,
-      lng: -3.7133789062500004,
-    },
-    id: 17806751,
-  },
-  {
-    cityName: 'Berlin',
-    country: 'Germany',
-    emoji: '🇩🇪',
-    date: '2027-02-12T09:24:11.863Z',
-    notes: 'Amazing 😃',
-    position: {
-      lat: 52.53586782505711,
-      lng: 13.376933665713324,
-    },
-    id: 98443197,
-  },
-];
+import { useQuery } from '@tanstack/react-query';
+import { getEntries } from '../../services/apiEntries';
+import { getLocations } from '../../services/apiLocations';
+import MoonLoader from 'react-spinners/MoonLoader';
 
 const BASE_URL =
   'https://{s}-tiles.locationiq.com/v3/streets/r/{z}/{x}/{y}.png?key=';
@@ -69,6 +34,24 @@ function Map() {
   } = useGeolocation();
 
   const [mapLat, mapLng] = useUrlPosition();
+
+  const {
+    isPending: isPendingEntries,
+    data: entries,
+    errorEntries,
+  } = useQuery({
+    queryKey: ['entries'],
+    queryFn: getEntries,
+  });
+
+  const {
+    isPending: isPendingLocations,
+    data: locations,
+    errorLocations,
+  } = useQuery({
+    queryKey: ['locations'],
+    queryFn: getLocations,
+  });
 
   useEffect(
     function () {
@@ -95,6 +78,9 @@ function Map() {
     [geolocationPosition],
   );
 
+  if (isPendingEntries || isPendingLocations) return <MoonLoader />;
+  console.log(locations);
+
   return (
     <div className="relative h-full w-full bg-white">
       {
@@ -115,10 +101,13 @@ function Map() {
           attribution='&copy; <a href="https://locationiq.com/?ref=maps" target="_blank">© LocationIQ</a> contributors'
           url={`${BASE_URL}${locationIqKey}`}
         />
-        {cities.map((city) => (
+        {locations.map((location) => (
           <Marker
-            position={[city.position.lat, city.position.lng]}
-            key={city.id}
+            position={[
+              location.coords.split(', ')[0],
+              location.coords.split(', ')[1],
+            ]}
+            key={location.id}
           >
             <Popup>
               <div className="-ml-2 mr-4 flex items-center justify-center gap-4">

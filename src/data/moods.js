@@ -15,7 +15,7 @@ export const moods = [
 
 export const moodColor = {
   happy: 'bg-violet',
-  anger: 'bg-white',
+  anger: 'bg-yellow-400',
   sad: 'bg-blue-500',
   romantic: 'bg-pink-500',
   depressed: 'bg-black',
