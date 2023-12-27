@@ -78,8 +78,12 @@ function Map() {
     [geolocationPosition],
   );
 
-  if (isPendingEntries || isPendingLocations) return <MoonLoader />;
-  console.log(locations);
+  if (isPendingEntries || isPendingLocations)
+    return (
+      <div className="bg-seamap-blue flex h-[100%] w-[100%] items-center justify-center ">
+        <MoonLoader color={'#fff'} size={125} />
+      </div>
+    );
 
   return (
     <div className="relative h-full w-full bg-white">

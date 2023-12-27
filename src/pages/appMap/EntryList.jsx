@@ -1,13 +1,11 @@
-import fakeEntries from '../../data/fakeEntries';
 import { moods } from '../../data/moods';
 import EntryItem from './EntryItem';
 import { FaChevronLeft } from 'react-icons/fa6';
 import { FaChevronRight } from 'react-icons/fa6';
+import MoonLoader from 'react-spinners/MoonLoader';
 
-import { useEffect } from 'react';
 import { getEntries } from '../../services/apiEntries';
 import { useQuery } from '@tanstack/react-query';
-import MoonLoader from 'react-spinners/MoonLoader';
 import { getLocations } from '../../services/apiLocations';
 
 function EntryList() {
@@ -29,14 +27,12 @@ function EntryList() {
     queryFn: getLocations,
   });
 
-  // Converts string coords into geolocation array positions
-  // console.log(
-  //   locations[entries[1].locationId - 1].coords
-  //     .split(', ')
-  //     .map((coord) => +coord),
-  // );
-
-  if (isPendingEntries || isPendingLocations) return <MoonLoader />;
+  if (isPendingEntries || isPendingLocations)
+    return (
+      <div className="flex h-[90%] w-[90%] flex-col items-center justify-center rounded-xl bg-accent-teal text-base text-white drop-shadow-lg">
+        <MoonLoader color={'#fff'} size={125} />
+      </div>
+    );
 
   return (
     <>

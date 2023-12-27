@@ -5,6 +5,7 @@ import { FaTrash } from 'react-icons/fa6';
 import { FaRegEdit } from 'react-icons/fa';
 import { FaChevronLeft } from 'react-icons/fa6';
 import { FaChevronRight } from 'react-icons/fa6';
+import MoonLoader from 'react-spinners/MoonLoader';
 
 import fakeEntries from '../../data/fakeEntries';
 import SecondaryMoods from './SecondaryMoods';
@@ -36,15 +37,23 @@ function Entry() {
   });
 
   const entry = entries.filter((entry) => +id === entry.id)[0];
-  // console.log(entry);
+
+  const dateArray = entry.created_at.slice(0, 10).split('-');
+
+  const date = `${dateArray[1]} ${dateArray[2]} ${dateArray[0]}`;
 
   const entryShorten =
     entry.entry.length < 34 ? entry.entry : entry.entry.slice(0, 20) + '...';
 
-  if (isPendingEntries || isPendingLocations) return <MoonLoader />;
+  if (isPendingEntries || isPendingLocations)
+    return (
+      <div className="flex h-[90%] w-[90%] flex-col items-center justify-center rounded-xl bg-accent-teal text-base text-white drop-shadow-lg">
+        <MoonLoader color={'#fff'} size={125} />
+      </div>
+    );
 
   const secondaryMoodList = entry.secondaryMood
-    ? entry.secondaryMood.split(', ')
+    ? entry.secondaryMood.split(' ')
     : [];
 
   return (
@@ -63,7 +72,7 @@ function Entry() {
         </div>
 
         <div className="flex flex-col items-center justify-center gap-1">
-          <div>{entry.date}</div>
+          <div>{date}</div>
           <div
             className={`rounded-full ${
               moodsColor[`${entry.primaryMood}`]

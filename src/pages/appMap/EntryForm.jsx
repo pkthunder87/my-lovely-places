@@ -32,15 +32,6 @@ function EntryForm() {
         );
         const data = await res.json();
 
-        console.log(data);
-
-        // console.log(
-        //   data.address.city,
-        //   data.address.state,
-        //   data.address.country,
-        //   data.display_name,
-        // );
-
         if (data.error) throw new Error('That is not a valid a location.');
 
         const address = data.address;

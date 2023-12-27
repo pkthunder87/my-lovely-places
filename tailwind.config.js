@@ -26,6 +26,7 @@ export default {
         sunshine: '#FED600',
         cream: '#FFFDD4',
         'sign-blue': '#0081D0',
+        'seamap-blue': '#97C7F4',
       },
     },
   },
