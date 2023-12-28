@@ -13,3 +13,17 @@ export async function getLocations() {
 
   return data;
 }
+
+export async function createLocation(newLocation) {
+  const { data, error } = await supabase
+    .from('locations')
+    .insert([newLocation])
+    .select();
+
+  if (error) {
+    console.error(error);
+    throw new Error('Location could not be created');
+  }
+
+  return data;
+}

@@ -22,3 +22,17 @@ export async function deleteEntry(id) {
     throw new Error('Entry could not be deleted');
   }
 }
+
+export async function createEntry(newEntry) {
+  const { data, error } = await supabase
+    .from('entries')
+    .insert([newEntry])
+    .select();
+
+  if (error) {
+    console.error(error);
+    throw new Error('Entry could not be created');
+  }
+
+  return data;
+}

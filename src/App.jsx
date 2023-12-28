@@ -9,6 +9,7 @@ import LoaderFullPage from './ui/LoaderFullPage';
 import EntryForm from './pages/appMap/EntryForm';
 import EntryList from './pages/appMap/EntryList';
 import Entry from './pages/appMap/Entry';
+import { UserProvider } from './contexts/UserContext';
 
 const ProtectedRoute = lazy(() => import('./pages/ProtectedRoute'));
 const Welcome = lazy(() => import('./pages/welcome/Welcome'));
@@ -35,38 +36,43 @@ function App() {
         <ReactQueryDevtools initialIsOpen={false} />
       </div>
 
-      <AuthProvider>
-        <BrowserRouter>
-          <Suspense fallback={<LoaderFullPage />}>
-            <Routes>
-              <Route index element={<Navigate replace to="/welcome" />} />
-              <Route path="/welcome" element={<Welcome />} />
-              <Route path="/login" element={<Login />} />
-              <Route path="/signup" element={<Signup />} />
-              <Route
-                path="app"
-                element={
-                  <ProtectedRoute>
-                    <AppLayout />
-                  </ProtectedRoute>
-                }
-              >
-                <Route index element={<Navigate replace to="map/entries" />} />
+      <UserProvider>
+        <AuthProvider>
+          <BrowserRouter>
+            <Suspense fallback={<LoaderFullPage />}>
+              <Routes>
+                <Route index element={<Navigate replace to="/welcome" />} />
+                <Route path="/welcome" element={<Welcome />} />
+                <Route path="/login" element={<Login />} />
+                <Route path="/signup" element={<Signup />} />
+                <Route
+                  path="app"
+                  element={
+                    <ProtectedRoute>
+                      <AppLayout />
+                    </ProtectedRoute>
+                  }
+                >
+                  <Route
+                    index
+                    element={<Navigate replace to="map/entries" />}
+                  />
 
-                <Route path="map" element={<AppMap />}>
-                  <Route index path="entries" element={<EntryList />} />
-                  <Route path="entries/:id" element={<Entry />} />
-                  <Route path="form" element={<EntryForm />} />
+                  <Route path="map" element={<AppMap />}>
+                    <Route index path="entries" element={<EntryList />} />
+                    <Route path="entries/:id" element={<Entry />} />
+                    <Route path="form" element={<EntryForm />} />
+                  </Route>
+
+                  <Route path="entries" element={<AppEntries />} />
+                  <Route path="filter" element={<AppFilter />} />
                 </Route>
-
-                <Route path="entries" element={<AppEntries />} />
-                <Route path="filter" element={<AppFilter />} />
-              </Route>
-              <Route path="*" element={<PageNotFound />} />
-            </Routes>
-          </Suspense>
-        </BrowserRouter>
-      </AuthProvider>
+                <Route path="*" element={<PageNotFound />} />
+              </Routes>
+            </Suspense>
+          </BrowserRouter>
+        </AuthProvider>
+      </UserProvider>
 
       <Toaster
         position="top-center"

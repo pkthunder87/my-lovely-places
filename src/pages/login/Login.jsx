@@ -16,6 +16,7 @@ function Login() {
     e.preventDefault();
 
     if (!email && !password) return;
+
     login(
       { email, password },
       {
@@ -26,13 +27,6 @@ function Login() {
       },
     );
   }
-
-  // useEffect(
-  //   function () {
-  //     if (isAuthenticated) navigate('/app/map', { replace: true });
-  //   },
-  //   [isAuthenticated, navigate],
-  // );
 
   return (
     <div>

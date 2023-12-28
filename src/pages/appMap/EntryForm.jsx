@@ -7,20 +7,46 @@ import { useForm } from 'react-hook-form';
 import locations from '../../data/locations';
 import { moods } from '../../data/moods';
 import { useUrlPosition } from '../../hooks/useUrlPosition';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { createLocation, getLocations } from '../../services/apiLocations';
+
+import toast from 'react-hot-toast';
 
 const BASE_URL = 'https://us1.locationiq.com/v1/reverse';
 
 const locationIqKey = import.meta.env.VITE_LOCATION_IQ_KEY;
 
 function EntryForm() {
+  const { register, handleSubmit, setValue, reset } = useForm({
+    mode: 'onBlur',
+  });
+
+  const queryClient = useQueryClient();
+
+  const { mutate, isPending: isPendingCreateLocation } = useMutation({
+    mutationFn: createLocation,
+    onSuccess: () => {
+      toast.success('New location successfully created');
+      queryClient.invalidateQueries({ queryKey: ['locations'] });
+      // reset();
+    },
+    onError: (err) => toast.error(err.message),
+  });
+
   const [lat, lng] = useUrlPosition();
-  const { register, handleSubmit } = useForm();
 
   const [isLoadingGeocoding, setIsLoadingGeocoding] = useState(false);
-  const [displayName, setDisplayName] = useState('');
-  const [cityName, setCityName] = useState('');
-  const [countryName, setCountryName] = useState('');
+
   const [geoCodingError, setGeocodingError] = useState('');
+
+  const {
+    isPending: isPendingLocationsAPI,
+    data: locationsRemoteData,
+    errorLocations,
+  } = useQuery({
+    queryKey: ['locations'],
+    queryFn: getLocations,
+  });
 
   useEffect(() => {
     if (!lat && !lng) return;
@@ -36,13 +62,46 @@ function EntryForm() {
 
         if (data.error) throw new Error('That is not a valid a location.');
 
+        console.log(data.place_id);
+        console.log(locationsRemoteData[1].placeId);
         const address = data.address;
 
-        setDisplayName(data.display_name);
+        const allLocationsId = locationsRemoteData.map(
+          (location) => location.placeId,
+        );
 
-        setCityName(address.city || address.village || address.town || '');
+        if (allLocationsId.includes(data.place_id)) {
+          setValue('locationAlreadyExists', true);
+        } else {
+          setValue('locationAlreadyExists', false);
+        }
 
-        setCountryName(address.country);
+        setValue('currentLocation', data.display_name);
+
+        setValue('clickPlaceId', data.place_id);
+
+        setValue('coords', `${data.lat}, ${data.lon}`);
+
+        // Code from https://www.freecodecamp.org/news/how-to-format-dates-in-javascript/
+        const currentDate = new Date().toLocaleDateString('en-us', {
+          weekday: 'long',
+          year: 'numeric',
+          month: 'short',
+          day: 'numeric',
+        });
+
+        setValue('date', currentDate);
+
+        setValue('country', address.country);
+
+        setValue(
+          'city',
+          address.city ||
+            address.village ||
+            address.town ||
+            address.county ||
+            '',
+        );
       } catch (err) {
         setGeocodingError(err.message);
       } finally {
@@ -52,18 +111,29 @@ function EntryForm() {
     fetchCityData();
   }, [lat, lng]);
 
-  function onSubmit(data) {
+  async function onSubmit(data) {
     console.log(data);
 
-    // Extract secondaryMoods from checkboxes
-    const secondaryMoodsList = [];
-    for (const [key, value] of Object.entries(data)) {
-      if (typeof value === 'boolean' && value === true)
-        secondaryMoodsList.push(key);
-      else console.log(key, value);
-    }
+    if (data.locationAlreadyExists) return;
 
-    console.log(secondaryMoodsList);
+    const newLocationItem = {
+      locationName: data.currentLocation,
+      placeId: data.clickPlaceId,
+      locationType: data.locationType,
+      country: data.country,
+      city: data.city,
+      coords: data.coords,
+    };
+
+    mutate(newLocationItem);
+
+    // Extract secondaryMoods from checkboxes in data object
+
+    // const secondaryMoodsList = [];
+    // for (const [key, value] of Object.entries(data)) {
+    //   if (typeof value === 'boolean' && value === true)
+    //     secondaryMoodsList.push(key);
+    // }
   }
 
   if (isLoadingGeocoding)
@@ -78,6 +148,13 @@ function EntryForm() {
       <div className="mt-8 flex h-[90%] w-[90%] flex-col items-center justify-center rounded-xl bg-accent-teal text-base text-white drop-shadow-lg">
         <p>{geoCodingError}</p>
         <p>Please click on a valid location on the map.</p>
+      </div>
+    );
+
+  if (isPendingLocationsAPI)
+    return (
+      <div className="flex h-[90%] w-[90%] flex-col items-center justify-center rounded-xl bg-accent-teal text-base text-white drop-shadow-lg">
+        <MoonLoader color={'#fff'} size={125} />
       </div>
     );
 
@@ -97,6 +174,51 @@ function EntryForm() {
           required
           {...register('currentLocation')}
         />
+
+        <input
+          hidden={true}
+          disabled={true}
+          type="text"
+          id="country"
+          name="country"
+          placeholder="Country"
+          required
+          {...register('country')}
+        />
+
+        <input
+          hidden={true}
+          disabled={true}
+          type="text"
+          id="city"
+          name="city"
+          placeholder="City"
+          required
+          {...register('city')}
+        />
+
+        <input
+          hidden={true}
+          disabled={true}
+          type="text"
+          id="coords"
+          name="coords"
+          placeholder="Coords"
+          required
+          {...register('coords')}
+        />
+
+        <input
+          hidden
+          disabled={true}
+          type="checkbox"
+          id="locationAlreadyExists"
+          name="locationAlreadyExists"
+          placeholder="locationAlreadyExists"
+          required
+          {...register('locationAlreadyExists')}
+        />
+
         <input
           className="input-login h-10 w-full rounded-xl text-lg "
           disabled={false}

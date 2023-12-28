@@ -71,7 +71,7 @@ function Map() {
 
   if (isPendingLocations || isLoadingGeolocation)
     return (
-      <div className="bg-seamap-blue flex h-[100%] w-[100%] items-center justify-center ">
+      <div className="flex h-[100%] w-[100%] items-center justify-center bg-seamap-blue ">
         <MoonLoader color={'#fff'} size={125} />
       </div>
     );

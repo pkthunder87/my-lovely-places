@@ -15,6 +15,7 @@ import { deleteEntry, getEntries } from '../../services/apiEntries';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import LocationIcon from '../../ui/LocationIcon';
 import toast from 'react-hot-toast';
+import { useCurrentUser } from '../../contexts/UserContext';
 
 const moodsColor = moodColor;
 
@@ -61,6 +62,9 @@ function Entry() {
     },
     onError: (err) => toast.error(err.message),
   });
+
+  const { currentUser } = useCurrentUser();
+  console.log(currentUser.id);
 
   if (isPendingEntries || isPendingLocations)
     return (
