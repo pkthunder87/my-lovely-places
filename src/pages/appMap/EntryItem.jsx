@@ -52,6 +52,10 @@ function EntryItem({ entry, index }) {
     (location) => entry.locationId === location.id,
   )[0].locationType;
 
+  const entryCoords = locations.filter(
+    (location) => entry.locationId === location.id,
+  )[0].coords;
+
   const dateArray = entry.created_at.slice(0, 10).split('-');
 
   const date = `${dateArray[1]} ${dateArray[2]} ${dateArray[0]}`;
@@ -61,14 +65,8 @@ function EntryItem({ entry, index }) {
       <NavLink
         className="mt-4 flex h-14 w-full rounded-2xl bg-accent-teal "
         to={`${id}?lat=${
-          locations[entries[index].locationId - 1].coords
-            .split(', ')
-            .map((coord) => +coord)[0]
-        }&lng=${
-          locations[entries[index].locationId - 1].coords
-            .split(', ')
-            .map((coord) => +coord)[1]
-        }`}
+          entryCoords.split(', ').map((coord) => +coord)[0]
+        }&lng=${entryCoords.split(', ').map((coord) => +coord)[1]}`}
       >
         <div className="mt-[2px] grid h-[7%] w-full grid-cols-[24%_42%_34%] rounded-3xl bg-transparent text-white drop-shadow-lg">
           <div className="flex  items-center justify-center ">

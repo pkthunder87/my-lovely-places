@@ -1,4 +1,5 @@
 import { createClient } from '@supabase/supabase-js';
+import { useCurrentUser } from '../contexts/UserContext';
 
 const supabaseUrl = 'https://euonjwwdtbyhkwleqcek.supabase.co';
 // const supabaseKey = process.env.SUPABASE_KEY;

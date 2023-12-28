@@ -11,27 +11,26 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { createLocation, getLocations } from '../../services/apiLocations';
 
 import toast from 'react-hot-toast';
+import { useCurrentUser } from '../../contexts/UserContext';
+import { createEntry, getEntries } from '../../services/apiEntries';
+import supabase from '../../services/supabase';
 
 const BASE_URL = 'https://us1.locationiq.com/v1/reverse';
 
 const locationIqKey = import.meta.env.VITE_LOCATION_IQ_KEY;
 
 function EntryForm() {
-  const { register, handleSubmit, setValue, reset } = useForm({
+  const [latestLocation, addLatestLocation] = useState(1423);
+
+  const { register, handleSubmit, setValue, getValues, reset } = useForm({
     mode: 'onBlur',
   });
 
+  const wait = (n) => new Promise((resolve) => setTimeout(resolve, n));
+
   const queryClient = useQueryClient();
 
-  const { mutate, isPending: isPendingCreateLocation } = useMutation({
-    mutationFn: createLocation,
-    onSuccess: () => {
-      toast.success('New location successfully created');
-      queryClient.invalidateQueries({ queryKey: ['locations'] });
-      // reset();
-    },
-    onError: (err) => toast.error(err.message),
-  });
+  const { currentUser } = useCurrentUser();
 
   const [lat, lng] = useUrlPosition();
 
@@ -46,6 +45,36 @@ function EntryForm() {
   } = useQuery({
     queryKey: ['locations'],
     queryFn: getLocations,
+  });
+
+  const {
+    isPending: isPendingEntriesAPI,
+    data: entries,
+    errorEntries,
+  } = useQuery({
+    queryKey: ['entries'],
+    queryFn: getEntries,
+  });
+
+  const { mutate: mutateLocation, isPending: isPendingCreateLocation } =
+    useMutation({
+      mutationFn: createLocation,
+      onSuccess: async () => {
+        toast.success('New location successfully created');
+        queryClient.invalidateQueries({ queryKey: ['locations'] });
+        // reset();
+      },
+      onError: (err) => toast.error(err.message),
+    });
+
+  const { mutate: mutateEntry, isPending: isPendingCreateEntry } = useMutation({
+    mutationFn: createEntry,
+    onSuccess: () => {
+      toast.success('New entry successfully created');
+      queryClient.invalidateQueries({ queryKey: ['entries'] });
+      // reset();
+    },
+    onError: (err) => toast.error(err.message),
   });
 
   useEffect(() => {
@@ -111,8 +140,38 @@ function EntryForm() {
     fetchCityData();
   }, [lat, lng]);
 
+  useEffect(() => {
+    const channel = supabase
+      .channel('schema-db-changes')
+      .on(
+        'postgres_changes',
+        {
+          event: 'INSERT',
+          schema: 'public',
+          table: 'locations',
+        },
+        (payload) => {
+          const userId = currentUser.id;
+
+          const data = getValues();
+
+          const newEntry = {
+            primaryMood: data.primaryMood,
+            entry: data.entry,
+            userId,
+            locationId: payload.new.id,
+          };
+
+          mutateEntry(newEntry);
+        },
+      )
+      .subscribe();
+  }, []);
+
   async function onSubmit(data) {
     console.log(data);
+
+    const wait = (n) => new Promise((resolve) => setTimeout(resolve, n));
 
     if (data.locationAlreadyExists) return;
 
@@ -125,7 +184,17 @@ function EntryForm() {
       coords: data.coords,
     };
 
-    mutate(newLocationItem);
+    const userId = await currentUser.id;
+
+    mutateLocation(newLocationItem);
+
+    console.log(isPendingCreateLocation, isPendingLocationsAPI);
+
+    console.log(data.date);
+
+    // const locationsId = await locationsRemoteData?.filter(
+    //   (item) => item.placeId === data?.clickPlaceId,
+    // )[0]?.id;
 
     // Extract secondaryMoods from checkboxes in data object
 

@@ -53,15 +53,12 @@ function App() {
                     </ProtectedRoute>
                   }
                 >
-                  <Route
-                    index
-                    element={<Navigate replace to="map/entries" />}
-                  />
+                  <Route index element={<Navigate replace to="map/form" />} />
 
                   <Route path="map" element={<AppMap />}>
                     <Route index path="entries" element={<EntryList />} />
                     <Route path="entries/:id" element={<Entry />} />
-                    <Route path="form" element={<EntryForm />} />
+                    <Route index path="form" element={<EntryForm />} />
                   </Route>
 
                   <Route path="entries" element={<AppEntries />} />

@@ -1,10 +1,7 @@
 import supabase from './supabase';
 
 export async function getEntries() {
-  let { data, error } = await supabase
-    .from('entries')
-    .select('*')
-    .order('id', { ascending: true });
+  let { data, error } = await supabase.from('entries').select('*');
 
   if (error) {
     console.error(error);
