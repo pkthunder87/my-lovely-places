@@ -9,6 +9,7 @@ import { moodColor } from '../../data/moods';
 import { useQuery } from '@tanstack/react-query';
 import { getEntries } from '../../services/apiEntries';
 import { getLocations } from '../../services/apiLocations';
+import LocationIcon from '../../ui/LocationIcon';
 
 const moodsColor = moodColor;
 
@@ -47,7 +48,9 @@ function EntryItem({ entry, index }) {
       </div>
     );
 
-  const entryIcon = locations[entries[index].locationId - 1].icon;
+  const entryIcon = locations.filter(
+    (location) => entry.locationId === location.id,
+  )[0].locationType;
 
   const dateArray = entry.created_at.slice(0, 10).split('-');
 
@@ -74,13 +77,7 @@ function EntryItem({ entry, index }) {
                 moodsColor[`${entry.primaryMood}`]
               } `}
             >
-              <div className="text-[2rem] ">
-                {entryIcon === 'IoRestaurant' ? (
-                  <IoRestaurant />
-                ) : (
-                  <MdFastfood />
-                )}
-              </div>
+              <LocationIcon entryIcon={entryIcon} />
             </div>
           </div>
 

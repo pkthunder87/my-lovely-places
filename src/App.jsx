@@ -23,7 +23,7 @@ const AppFilter = lazy(() => import('./pages/appFilter/AppFilter'));
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
-      staleTime: 600 * 1000,
+      staleTime: 2 * 1000,
     },
   },
 });

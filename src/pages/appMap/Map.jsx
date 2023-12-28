@@ -28,21 +28,12 @@ function Map() {
   const navigate = useNavigate();
 
   const {
-    isLoading: isLoadingPosition,
+    isLoading: isLoadingGeolocation,
     position: geolocationPosition,
     getPosition,
   } = useGeolocation();
 
   const [mapLat, mapLng] = useUrlPosition();
-
-  const {
-    isPending: isPendingEntries,
-    data: entries,
-    errorEntries,
-  } = useQuery({
-    queryKey: ['entries'],
-    queryFn: getEntries,
-  });
 
   const {
     isPending: isPendingLocations,
@@ -78,7 +69,7 @@ function Map() {
     [geolocationPosition],
   );
 
-  if (isPendingEntries || isPendingLocations)
+  if (isPendingLocations || isLoadingGeolocation)
     return (
       <div className="bg-seamap-blue flex h-[100%] w-[100%] items-center justify-center ">
         <MoonLoader color={'#fff'} size={125} />
@@ -92,7 +83,7 @@ function Map() {
           className="button-general absolute bottom-8 z-[1000] h-10 w-56 translate-x-[125%] transform bg-accent-teal"
           onClick={getPosition}
         >
-          {isLoadingPosition ? 'Loading...' : 'Move to current location'}
+          {isLoadingGeolocation ? 'Loading...' : 'Move to current location'}
         </button>
       }
       <MapContainer

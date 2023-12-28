@@ -6,7 +6,7 @@ function NavApp() {
       <NavLink to="entries">
         <button className="button-general w-20 bg-tint-teal">Entries</button>
       </NavLink>
-      <p>Entry Form</p>
+      <p>Locations</p>
       <p>Recent Entries</p>
     </div>
   );

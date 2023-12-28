@@ -1,5 +1,8 @@
 import { useEffect, useState } from 'react';
 import MoonLoader from 'react-spinners/MoonLoader';
+import { LuTimerReset } from 'react-icons/lu';
+
+import { useForm } from 'react-hook-form';
 
 import locations from '../../data/locations';
 import { moods } from '../../data/moods';
@@ -11,8 +14,7 @@ const locationIqKey = import.meta.env.VITE_LOCATION_IQ_KEY;
 
 function EntryForm() {
   const [lat, lng] = useUrlPosition();
-  const [date, setDate] = useState(new Date());
-  const [notes, setNotes] = useState('');
+  const { register, handleSubmit } = useForm();
 
   const [isLoadingGeocoding, setIsLoadingGeocoding] = useState(false);
   const [displayName, setDisplayName] = useState('');
@@ -50,16 +52,30 @@ function EntryForm() {
     fetchCityData();
   }, [lat, lng]);
 
+  function onSubmit(data) {
+    console.log(data);
+
+    // Extract secondaryMoods from checkboxes
+    const secondaryMoodsList = [];
+    for (const [key, value] of Object.entries(data)) {
+      if (typeof value === 'boolean' && value === true)
+        secondaryMoodsList.push(key);
+      else console.log(key, value);
+    }
+
+    console.log(secondaryMoodsList);
+  }
+
   if (isLoadingGeocoding)
     return (
-      <div className="flex h-[90%] w-[90%] flex-col items-center justify-center rounded-xl bg-accent-teal text-base text-white drop-shadow-lg">
+      <div className="mt-8 flex h-[90%] w-[90%] flex-col items-center justify-center rounded-xl bg-accent-teal text-base text-white drop-shadow-lg">
         <MoonLoader color={'#fff'} size={125} />
       </div>
     );
 
   if (geoCodingError)
     return (
-      <div className="flex h-[90%] w-[90%] flex-col items-center justify-center rounded-xl bg-accent-teal text-base text-white drop-shadow-lg">
+      <div className="mt-8 flex h-[90%] w-[90%] flex-col items-center justify-center rounded-xl bg-accent-teal text-base text-white drop-shadow-lg">
         <p>{geoCodingError}</p>
         <p>Please click on a valid location on the map.</p>
       </div>
@@ -67,14 +83,19 @@ function EntryForm() {
 
   return (
     <div className="mt-8 flex h-[90%] w-[90%] flex-col items-center justify-center rounded-xl bg-accent-teal drop-shadow-lg">
-      <form className=" -ml-2 mt-8 flex h-full w-[90%] flex-col items-center gap-6">
+      <form
+        className=" -ml-2 mt-8 flex h-full w-[90%] flex-col items-center gap-6"
+        onSubmit={handleSubmit(onSubmit)}
+      >
         <input
           className="input-login h-10 w-full rounded-xl text-lg "
           disabled={false}
           type="text"
-          id="current_location"
-          name="current_location"
+          id="currentLocation"
+          name="currentLocation"
           placeholder="Current Location"
+          required
+          {...register('currentLocation')}
         />
         <input
           className="input-login h-10 w-full rounded-xl text-lg "
@@ -83,14 +104,17 @@ function EntryForm() {
           id="date"
           name="date"
           placeholder="Date"
+          required
+          {...register('date')}
         />
 
         <select
           className="input-login h-10 w-full rounded-xl text-lg "
-          id="location_type"
-          name="location_type"
+          id="locationType"
+          name="locationType"
           defaultValue="none"
           required
+          {...register('locationType')}
         >
           <option value="none" disabled hidden>
             Select Location Type
@@ -107,13 +131,14 @@ function EntryForm() {
 
         <select
           className="input-login h-10 w-full rounded-xl text-lg "
-          id="primary_mood"
-          name="primary_mood"
+          id="primaryMood"
+          name="primaryMood"
           defaultValue="none"
           required
+          {...register('primaryMood')}
         >
           <option value="none" disabled hidden>
-            Select 1 Primary Mood
+            Select Primary Mood
           </option>
           {moods.toSorted().map((mood) => {
             return (
@@ -132,7 +157,13 @@ function EntryForm() {
           {moods.toSorted().map((mood) => {
             return (
               <div key={mood}>
-                <input className="" type="checkbox" id={mood} name={mood} />
+                <input
+                  className=""
+                  type="checkbox"
+                  id={mood}
+                  name={mood}
+                  {...register(mood)}
+                />
                 <label className="ml-2 mr-2" htmlFor={mood}>
                   {mood.charAt(0).toUpperCase() + mood.slice(1)}
                 </label>
@@ -144,16 +175,24 @@ function EntryForm() {
         <textarea
           className="input-login flex h-64 w-full rounded-xl text-lg  "
           disabled={false}
-          id="current_location"
-          name="current_location"
-          placeholder="Current Location"
+          id="entry"
+          name="entry"
+          placeholder="Entry"
+          required
+          {...register('entry')}
         ></textarea>
-        <div className=" flex gap-8">
-          <button className="button-general h-10 w-32 border-2 bg-accent-teal ">
+        <div className=" flex">
+          <button className="button-general mr-4 h-10 w-32 border-2 bg-accent-teal">
             Save Draft
           </button>
-          <button className="button-general h-10 w-32 bg-tint-teal drop-shadow-md">
-            Create Account
+          <button className="button-general mr-4 h-10 w-32 bg-tint-teal drop-shadow-md">
+            Create Entry
+          </button>
+          <button
+            type="reset"
+            className="button-general h-10 w-11 bg-tint-teal text-2xl drop-shadow-md"
+          >
+            <LuTimerReset />
           </button>
         </div>
       </form>
