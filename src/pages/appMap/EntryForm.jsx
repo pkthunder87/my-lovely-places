@@ -1,26 +1,28 @@
 import { useEffect, useState } from 'react';
+import { useForm } from 'react-hook-form';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+
+import toast from 'react-hot-toast';
+import supabase from '../../services/supabase';
+import { useNavigate } from 'react-router-dom';
+
 import MoonLoader from 'react-spinners/MoonLoader';
 import { LuTimerReset } from 'react-icons/lu';
 
-import { useForm } from 'react-hook-form';
-
 import locations from '../../data/locations';
 import { moods } from '../../data/moods';
-import { useUrlPosition } from '../../hooks/useUrlPosition';
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import { createLocation, getLocations } from '../../services/apiLocations';
 
-import toast from 'react-hot-toast';
-import { useCurrentUser } from '../../contexts/UserContext';
+import { createLocation, getLocations } from '../../services/apiLocations';
 import { createEntry, getEntries } from '../../services/apiEntries';
-import supabase from '../../services/supabase';
+import { useUrlPosition } from '../../hooks/useUrlPosition';
+import { useCurrentUser } from '../../contexts/UserContext';
 
 const BASE_URL = 'https://us1.locationiq.com/v1/reverse';
 
 const locationIqKey = import.meta.env.VITE_LOCATION_IQ_KEY;
 
 function EntryForm() {
-  const [latestLocation, addLatestLocation] = useState(1423);
+  const navigate = useNavigate();
 
   const { register, handleSubmit, setValue, getValues, reset } = useForm({
     mode: 'onBlur',
@@ -72,6 +74,7 @@ function EntryForm() {
     onSuccess: () => {
       toast.success('New entry successfully created');
       queryClient.invalidateQueries({ queryKey: ['entries'] });
+      navigate('/app/map/entries');
       // reset();
     },
     onError: (err) => toast.error(err.message),
@@ -91,8 +94,6 @@ function EntryForm() {
 
         if (data.error) throw new Error('That is not a valid a location.');
 
-        console.log(data.place_id);
-        console.log(locationsRemoteData[1].placeId);
         const address = data.address;
 
         const allLocationsId = locationsRemoteData.map(
@@ -155,8 +156,20 @@ function EntryForm() {
 
           const data = getValues();
 
+          // Extract secondaryMoods from checkboxes in data object
+          const secondaryMoodsList = [];
+          for (const [key, value] of Object.entries(data)) {
+            if (typeof value === 'boolean' && value === true) {
+              if (key === 'locationAlreadyExists') continue;
+              secondaryMoodsList.push(key);
+            }
+          }
+
+          const secondaryMood = secondaryMoodsList.join(' ');
+
           const newEntry = {
             primaryMood: data.primaryMood,
+            secondaryMood,
             entry: data.entry,
             userId,
             locationId: payload.new.id,
@@ -171,38 +184,49 @@ function EntryForm() {
   async function onSubmit(data) {
     console.log(data);
 
-    const wait = (n) => new Promise((resolve) => setTimeout(resolve, n));
-
-    if (data.locationAlreadyExists) return;
-
-    const newLocationItem = {
-      locationName: data.currentLocation,
-      placeId: data.clickPlaceId,
-      locationType: data.locationType,
-      country: data.country,
-      city: data.city,
-      coords: data.coords,
-    };
-
     const userId = await currentUser.id;
 
-    mutateLocation(newLocationItem);
+    if (data.locationAlreadyExists) {
+      const locationId = await locationsRemoteData?.filter(
+        (item) => item.placeId === data?.clickPlaceId,
+      )[0]?.id;
 
-    console.log(isPendingCreateLocation, isPendingLocationsAPI);
+      // Extract secondaryMoods from checkboxes in data object
+      const secondaryMoodsList = [];
+      for (const [key, value] of Object.entries(data)) {
+        if (typeof value === 'boolean' && value === true) {
+          if (key === 'locationAlreadyExists') continue;
+          secondaryMoodsList.push(key);
+        }
+      }
 
-    console.log(data.date);
+      const secondaryMood = secondaryMoodsList.join(' ');
 
-    // const locationsId = await locationsRemoteData?.filter(
-    //   (item) => item.placeId === data?.clickPlaceId,
-    // )[0]?.id;
+      const newEntry = {
+        primaryMood: data.primaryMood,
+        secondaryMood,
+        entry: data.entry,
+        userId,
+        locationId,
+      };
 
-    // Extract secondaryMoods from checkboxes in data object
+      mutateEntry(newEntry);
 
-    // const secondaryMoodsList = [];
-    // for (const [key, value] of Object.entries(data)) {
-    //   if (typeof value === 'boolean' && value === true)
-    //     secondaryMoodsList.push(key);
-    // }
+      console.log(`New entry for existing location: ${locationId}`);
+    } else {
+      console.log('NEW LOCATION!');
+
+      const newLocationItem = {
+        locationName: data.currentLocation,
+        placeId: data.clickPlaceId,
+        locationType: data.locationType,
+        country: data.country,
+        city: data.city,
+        coords: data.coords,
+      };
+
+      mutateLocation(newLocationItem);
+    }
   }
 
   if (isLoadingGeocoding)
