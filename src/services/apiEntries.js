@@ -1,14 +1,18 @@
 import supabase from './supabase';
 
 export async function getEntries() {
-  const localData = JSON.parse(
-    localStorage.getItem('sb-euonjwwdtbyhkwleqcek-auth-token'),
-  );
+  // const localData = JSON.parse(
+  //   localStorage.getItem('sb-euonjwwdtbyhkwleqcek-auth-token'),
+  // );
+
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
 
   let { data, error } = await supabase
     .from('entries')
     .select('*')
-    .eq('userId', localData.user.id);
+    .eq('userId', user.id);
 
   if (error) {
     console.error(error);

@@ -28,6 +28,15 @@ function Map() {
   const navigate = useNavigate();
 
   const {
+    isPending: isPendingEntries,
+    data: entries,
+    errorEntries,
+  } = useQuery({
+    queryKey: ['entries'],
+    queryFn: getEntries,
+  });
+
+  const {
     isLoading: isLoadingGeolocation,
     position: geolocationPosition,
     getPosition,
@@ -69,12 +78,14 @@ function Map() {
     [geolocationPosition],
   );
 
-  if (isPendingLocations || isLoadingGeolocation)
+  if (isPendingLocations || isPendingEntries || isLoadingGeolocation)
     return (
       <div className="flex h-[100%] w-[100%] items-center justify-center bg-seamap-blue ">
         <MoonLoader color={'#fff'} size={125} />
       </div>
     );
+
+  const currentUserLocationsId = entries.map((entry) => entry.locationId);
 
   return (
     <div className="relative h-full w-full bg-white">
@@ -96,26 +107,32 @@ function Map() {
           attribution='&copy; <a href="https://locationiq.com/?ref=maps" target="_blank">© LocationIQ</a> contributors'
           url={`${BASE_URL}${locationIqKey}`}
         />
-        {locations.map((location) => (
-          <Marker
-            position={[
-              location.coords.split(', ')[0],
-              location.coords.split(', ')[1],
-            ]}
-            key={location.id}
-          >
-            <Popup>
-              <div className="-ml-2 mr-4 flex items-center justify-center gap-4">
-                <div className="flex h-10 w-10 items-center justify-center rounded-full bg-sign-blue">
-                  <div className="text-2xl">
-                    <MdFastfood />
+        {locations.map((location) => {
+          if (currentUserLocationsId.includes(location.id)) {
+            return (
+              <Marker
+                position={[
+                  location.coords.split(', ')[0],
+                  location.coords.split(', ')[1],
+                ]}
+                key={location.id}
+              >
+                <Popup>
+                  <div className="-ml-2 mr-4 flex items-center justify-center gap-4">
+                    <div className="flex h-10 w-10 items-center justify-center rounded-full bg-sign-blue">
+                      <div className="text-2xl">
+                        <MdFastfood />
+                      </div>
+                    </div>
+                    <p className=" text-[16px] font-bold text-white">
+                      Location
+                    </p>
                   </div>
-                </div>
-                <p className=" text-[16px] font-bold text-white">Location</p>
-              </div>
-            </Popup>
-          </Marker>
-        ))}
+                </Popup>
+              </Marker>
+            );
+          }
+        })}
         <ChangeCenter position={mapPosition} />
         <DetectClick position={mapPosition} />
       </MapContainer>
