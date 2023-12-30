@@ -64,7 +64,6 @@ function Entry() {
   });
 
   const { currentUser } = useCurrentUser();
-  console.log(currentUser.id);
 
   if (isPendingEntries || isPendingLocations)
     return (
