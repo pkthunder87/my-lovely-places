@@ -80,6 +80,10 @@ function Entry() {
     (location) => entry.locationId === location.id,
   )[0].locationType;
 
+  const entryLocationName = locations.filter(
+    (location) => entry.locationId === location.id,
+  )[0].locationName;
+
   return (
     <>
       <div className="mt-6 grid h-[7%] w-[90%] grid-cols-[24%_42%_34%] rounded-3xl bg-accent-teal text-white drop-shadow-lg">
@@ -109,11 +113,17 @@ function Entry() {
         </div>
       </div>
 
+      <div className="mt-3 h-[3%] w-[90%] rounded-xl bg-accent-teal text-white drop-shadow-lg">
+        <div className="  truncate text-center">
+          {entryLocationName.split(', ').slice(0, 3).join(', ')}
+        </div>
+      </div>
+
       <div className="self-start px-6">
         <SecondaryMoods moods={secondaryMoodList} />
       </div>
 
-      <div className="flex h-[74%] w-[90%] flex-col items-center gap-5 rounded-lg bg-accent-teal drop-shadow-lg">
+      <div className="flex h-[70%] w-[90%] flex-col items-center gap-5 rounded-lg bg-accent-teal drop-shadow-lg">
         <div className="mt-6 h-[82%] w-[90%] rounded-lg bg-white drop-shadow-lg">
           <p className="ml-2 mt-1 text-lg text-periwinkle">{entry.entry}</p>
         </div>
