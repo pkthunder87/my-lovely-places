@@ -16,6 +16,7 @@ import { createLocation, getLocations } from '../../services/apiLocations';
 import { createEntry, getEntries } from '../../services/apiEntries';
 import { useUrlPosition } from '../../hooks/useUrlPosition';
 import { useCurrentUser } from '../../contexts/UserContext';
+import { useEntryLocalStorage } from '../../hooks/useEntryLocalStorage';
 
 const BASE_URL = 'https://us1.locationiq.com/v1/reverse';
 
@@ -28,7 +29,7 @@ function EntryForm() {
     mode: 'onBlur',
   });
 
-  const wait = (n) => new Promise((resolve) => setTimeout(resolve, n));
+  const [entryDraft, setEntryDraft] = useEntryLocalStorage([], 'localEntry');
 
   const queryClient = useQueryClient();
 
@@ -64,7 +65,7 @@ function EntryForm() {
       onSuccess: async () => {
         toast.success('New location successfully created');
         queryClient.invalidateQueries({ queryKey: ['locations'] });
-        // reset();
+        reset();
       },
       onError: (err) => toast.error(err.message),
     });
@@ -84,6 +85,7 @@ function EntryForm() {
     if (!lat && !lng) return;
 
     async function fetchCityData() {
+      reset();
       try {
         setIsLoadingGeocoding(true);
         setGeocodingError('');
@@ -91,6 +93,14 @@ function EntryForm() {
           `${BASE_URL}?key=${locationIqKey}&lat=${lat}&lon=${lng}&format=json`,
         );
         const data = await res.json();
+
+        const currentVSLocalEntry = entryDraft.filter(
+          (localDraft) => localDraft.clickPlaceId === data.place_id,
+        );
+
+        console.log(data);
+        console.log(entryDraft);
+        console.log(currentVSLocalEntry[0]?.entry);
 
         if (data.error) throw new Error('That is not a valid a location.');
 
@@ -120,9 +130,24 @@ function EntryForm() {
           day: 'numeric',
         });
 
-        setValue('date', currentDate);
+        setValue('date', currentVSLocalEntry[0]?.date || currentDate);
 
         setValue('country', address.country);
+
+        if (currentVSLocalEntry[0]) {
+          setValue('entry', currentVSLocalEntry[0]?.entry || '');
+
+          setValue('locationType', currentVSLocalEntry[0]?.locationType || '');
+
+          setValue('primaryMood', currentVSLocalEntry[0]?.primaryMood || '');
+
+          for (const [key, value] of Object.entries(currentVSLocalEntry[0])) {
+            if (typeof value === 'boolean' && value === true) {
+              if (key === 'locationAlreadyExists') continue;
+              setValue(key, true);
+            }
+          }
+        }
 
         setValue(
           'city',
@@ -180,6 +205,12 @@ function EntryForm() {
       )
       .subscribe();
   }, []);
+
+  async function onClickDraft(data) {
+    console.log('Clicked Draft!');
+    console.log(data);
+    setEntryDraft((localEntry) => [...localEntry, data]);
+  }
 
   async function onSubmit(data) {
     console.log(data);
@@ -397,7 +428,10 @@ function EntryForm() {
           {...register('entry')}
         ></textarea>
         <div className=" flex">
-          <button className="button-general mr-4 h-10 w-32 border-2 bg-accent-teal">
+          <button
+            onClick={handleSubmit(onClickDraft)}
+            className="button-general mr-4 h-10 w-32 border-2 bg-accent-teal"
+          >
             Save Draft
           </button>
           <button className="button-general mr-4 h-10 w-32 bg-tint-teal drop-shadow-md">
