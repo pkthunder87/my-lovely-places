@@ -24,6 +24,7 @@ This is my final project for CS50x.
 - Supabase
 - React Query
 - React Router
+- React Leaflet
 - React Hook Form
 - React Icons
 - React Hot Toast
