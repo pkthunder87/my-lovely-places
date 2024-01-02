@@ -97,6 +97,14 @@ function Map() {
           {isLoadingGeolocation ? 'Loading...' : 'Move to current location'}
         </button>
       }
+      {
+        <button
+          className="button-general absolute right-8 top-4 z-[1000] h-10 w-56 transform bg-accent-teal"
+          onClick={getPosition}
+        >
+          {isLoadingGeolocation ? 'Loading...' : 'Logout'}
+        </button>
+      }
       <MapContainer
         center={mapPosition}
         zoom={6}
