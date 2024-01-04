@@ -17,6 +17,7 @@ import { useQuery } from '@tanstack/react-query';
 import { getEntries } from '../../services/apiEntries';
 import { getLocations } from '../../services/apiLocations';
 import MoonLoader from 'react-spinners/MoonLoader';
+import supabase from '../../services/supabase';
 
 const BASE_URL =
   'https://{s}-tiles.locationiq.com/v3/streets/r/{z}/{x}/{y}.png?key=';
@@ -25,7 +26,21 @@ const locationIqKey = import.meta.env.VITE_LOCATION_IQ_KEY;
 
 function Map() {
   const [mapPosition, setMapPosition] = useState([40, 0]);
+  const [showUser, setUser] = useState(' ');
+
   const navigate = useNavigate();
+
+  useEffect(() => {
+    const fetchUser = async () => {
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
+
+      setUser(user.email.split('@')[0]);
+    };
+
+    fetchUser();
+  }, []);
 
   const {
     isPending: isPendingEntries,
@@ -102,7 +117,7 @@ function Map() {
           className="button-general absolute right-8 top-4 z-[1000] h-10 w-56 transform bg-accent-teal"
           onClick={getPosition}
         >
-          {isLoadingGeolocation ? 'Loading...' : 'Logout'}
+          {showUser} Logout
         </button>
       }
       <MapContainer
