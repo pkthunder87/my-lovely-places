@@ -113,12 +113,13 @@ function Map() {
         </button>
       }
       {
-        <button
-          className="button-general absolute right-8 top-4 z-[1000] h-10 w-56 transform bg-accent-teal"
-          onClick={getPosition}
-        >
-          {showUser} Logout
-        </button>
+        <div className="button-general absolute right-8 top-4 z-[1000] h-16 w-72 transform rounded-[2rem] bg-accent-teal">
+          <p className="flex flex-col">
+            <p>Hi {showUser[0].toUpperCase() + showUser.slice(1)}.</p>
+            <p>How was your day?</p>
+          </p>
+          <button>Logout</button>
+        </div>
       }
       <MapContainer
         center={mapPosition}
