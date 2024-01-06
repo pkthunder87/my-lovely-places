@@ -10,6 +10,7 @@ import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { MdFastfood } from 'react-icons/md';
+import { RiLogoutCircleRLine } from 'react-icons/ri';
 
 import { useGeolocation } from '../../hooks/useGeolocation';
 import { useUrlPosition } from '../../hooks/useUrlPosition';
@@ -113,12 +114,23 @@ function Map() {
         </button>
       }
       {
-        <div className="button-general absolute right-8 top-4 z-[1000] h-16 w-72 transform rounded-[2rem] bg-accent-teal">
-          <p className="flex flex-col">
+        <div className="button-general absolute right-8 top-4 z-[1000] flex h-16 w-72  justify-around rounded-full bg-accent-teal hover:brightness-100">
+          <picture className=" flex h-12 w-12 items-center justify-center overflow-hidden rounded-full bg-white">
+            <source srcSet="/user-avatar-1.webp" type="image/webp" />
+            <img
+              className=""
+              src="/user-avatar-1.png"
+              alt="Pastel doodle of user's avatar"
+              type="image/png"
+            />
+          </picture>
+          <div className="flex flex-col">
             <p>Hi {showUser[0].toUpperCase() + showUser.slice(1)}.</p>
             <p>How was your day?</p>
-          </p>
-          <button>Logout</button>
+          </div>
+          <button className="text-[2.5rem] hover:text-sign-blue">
+            <RiLogoutCircleRLine />
+          </button>
         </div>
       }
       <MapContainer
