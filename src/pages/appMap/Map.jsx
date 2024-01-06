@@ -9,6 +9,8 @@ import {
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
+import MoonLoader from 'react-spinners/MoonLoader';
+import PuffLoader from 'react-spinners/PuffLoader';
 import { MdFastfood } from 'react-icons/md';
 import { RiLogoutCircleRLine } from 'react-icons/ri';
 
@@ -17,8 +19,9 @@ import { useUrlPosition } from '../../hooks/useUrlPosition';
 import { useQuery } from '@tanstack/react-query';
 import { getEntries } from '../../services/apiEntries';
 import { getLocations } from '../../services/apiLocations';
-import MoonLoader from 'react-spinners/MoonLoader';
+
 import supabase from '../../services/supabase';
+import { useLogout } from '../../services/useLogout';
 
 const BASE_URL =
   'https://{s}-tiles.locationiq.com/v3/streets/r/{z}/{x}/{y}.png?key=';
@@ -94,6 +97,8 @@ function Map() {
     [geolocationPosition],
   );
 
+  const { logout, isPending: isPendingLogout } = useLogout();
+
   if (isPendingLocations || isPendingEntries || isLoadingGeolocation)
     return (
       <div className="flex h-[100%] w-[100%] items-center justify-center bg-seamap-blue ">
@@ -128,8 +133,16 @@ function Map() {
             <p>Hi {showUser[0].toUpperCase() + showUser.slice(1)}.</p>
             <p>How was your day?</p>
           </div>
-          <button className="text-[2.5rem] hover:text-sign-blue">
-            <RiLogoutCircleRLine />
+          <button
+            disabled={isPendingLogout}
+            onClick={logout}
+            className="text-[2.5rem] hover:text-sign-blue"
+          >
+            {!isPendingLogout ? (
+              <RiLogoutCircleRLine />
+            ) : (
+              <PuffLoader color={'#fff'} size={50} />
+            )}
           </button>
         </div>
       }
