@@ -10,9 +10,8 @@ import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import MoonLoader from 'react-spinners/MoonLoader';
-import PuffLoader from 'react-spinners/PuffLoader';
+
 import { MdFastfood } from 'react-icons/md';
-import { RiLogoutCircleRLine } from 'react-icons/ri';
 
 import { useGeolocation } from '../../hooks/useGeolocation';
 import { useUrlPosition } from '../../hooks/useUrlPosition';
@@ -22,6 +21,7 @@ import { getLocations } from '../../services/apiLocations';
 
 import supabase from '../../services/supabase';
 import { useLogout } from '../../services/useLogout';
+import UserBar from '../../ui/UserBar';
 
 const BASE_URL =
   'https://{s}-tiles.locationiq.com/v3/streets/r/{z}/{x}/{y}.png?key=';
@@ -118,34 +118,11 @@ function Map() {
           {isLoadingGeolocation ? 'Loading...' : 'Move to current location'}
         </button>
       }
-      {
-        <div className="button-general absolute right-8 top-4 z-[1000] flex h-16 w-72  justify-around rounded-full bg-accent-teal hover:brightness-100">
-          <picture className=" flex h-12 w-12 items-center justify-center overflow-hidden rounded-full bg-white">
-            <source srcSet="/user-avatar-1.webp" type="image/webp" />
-            <img
-              className=""
-              src="/user-avatar-1.png"
-              alt="Pastel doodle of user's avatar"
-              type="image/png"
-            />
-          </picture>
-          <div className="flex flex-col">
-            <p>Hi {showUser[0].toUpperCase() + showUser.slice(1)}.</p>
-            <p>How was your day?</p>
-          </div>
-          <button
-            disabled={isPendingLogout}
-            onClick={logout}
-            className="text-[2.5rem] hover:text-sign-blue"
-          >
-            {!isPendingLogout ? (
-              <RiLogoutCircleRLine />
-            ) : (
-              <PuffLoader color={'#fff'} size={50} />
-            )}
-          </button>
-        </div>
-      }
+      <UserBar
+        showUser={showUser}
+        logout={logout}
+        isPendingLogout={isPendingLogout}
+      />
       <MapContainer
         center={mapPosition}
         zoom={6}
