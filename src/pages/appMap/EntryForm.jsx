@@ -98,10 +98,6 @@ function EntryForm() {
           (localDraft) => localDraft.clickPlaceId === data.place_id,
         );
 
-        console.log(data);
-        console.log(entryDraft);
-        console.log(currentVSLocalEntry[0]?.entry);
-
         if (data.error) throw new Error('That is not a valid a location.');
 
         const address = data.address;
@@ -207,14 +203,10 @@ function EntryForm() {
   }, []);
 
   async function onClickDraft(data) {
-    console.log('Clicked Draft!');
-    console.log(data);
     setEntryDraft((localEntry) => [...localEntry, data]);
   }
 
   async function onSubmit(data) {
-    console.log(data);
-
     const userId = await currentUser.id;
 
     if (data.locationAlreadyExists) {
@@ -242,11 +234,7 @@ function EntryForm() {
       };
 
       mutateEntry(newEntry);
-
-      console.log(`New entry for existing location: ${locationId}`);
     } else {
-      console.log('NEW LOCATION!');
-
       const newLocationItem = {
         locationName: data.currentLocation,
         placeId: data.clickPlaceId,

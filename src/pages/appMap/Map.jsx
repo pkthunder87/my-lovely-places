@@ -30,6 +30,7 @@ const locationIqKey = import.meta.env.VITE_LOCATION_IQ_KEY;
 
 function Map() {
   const [mapPosition, setMapPosition] = useState([40, 0]);
+
   const [showUser, setUser] = useState(' ');
 
   const navigate = useNavigate();
