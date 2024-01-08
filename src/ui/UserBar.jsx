@@ -4,26 +4,36 @@ import { useState } from 'react';
 import AvatarModal from './AvatarModal';
 
 function UserBar({ showUser, isPendingLogout, logout }) {
-  const [showAvatarOptions, setShowAvatarOptions] = useState(true);
-  const [currentAvatar, setCurrentAvatar] = useState('');
+  const [showAvatarOptions, setShowAvatarOptions] = useState(false);
+  const [currentAvatar, setCurrentAvatar] = useState(() => {
+    const avatar = localStorage.getItem('localAvatar')
+      ? localStorage.getItem('localAvatar')
+      : '';
+    return avatar;
+  });
 
   return (
     <div className="button-general absolute right-8 top-4 z-[1000] flex h-16 w-72  justify-around rounded-full bg-accent-teal hover:brightness-100">
       <div className="relative">
         <picture
-          onClick={() => console.log('CLICKED AVATAR!')}
-          className=" flex h-12 w-12 cursor-pointer items-center justify-center overflow-hidden rounded-full bg-white"
+          onClick={() => setShowAvatarOptions((cur) => !cur)}
+          className=" flex h-12 w-12 cursor-pointer items-center justify-center overflow-hidden rounded-full bg-periwinkle"
         >
-          <source srcSet="/user-avatar-1.webp" type="image/webp" />
+          <source srcSet={`/${currentAvatar}.webp`} type="image/webp" />
           <img
             className=""
-            src="/user-avatar-1.png"
-            alt="Pastel doodle of user's avatar"
+            src={`/${currentAvatar}.png`}
+            alt={
+              !currentAvatar ? 'Click Me!' : "Pastel doodle of user's avatar"
+            }
             type="image/png"
           />
         </picture>
         {showAvatarOptions && (
-          <AvatarModal setCurrentAvatar={setCurrentAvatar} />
+          <AvatarModal
+            setCurrentAvatar={setCurrentAvatar}
+            setShowAvatarOptions={setShowAvatarOptions}
+          />
         )}
       </div>
       <div className="flex flex-col">
