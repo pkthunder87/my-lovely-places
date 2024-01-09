@@ -9,6 +9,10 @@ const avatarImages = [
   'user-avatar-6',
   'user-avatar-7',
   'user-avatar-8',
+  'user-avatar-9',
+  'user-avatar-10',
+  'user-avatar-11',
+  'user-avatar-12',
 ];
 
 function AvatarModal({ setCurrentAvatar, setShowAvatarOptions }) {

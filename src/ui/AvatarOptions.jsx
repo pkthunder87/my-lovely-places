@@ -1,6 +1,5 @@
 function AvatarOptions({ avatarImg, setCurrentAvatar, setShowAvatarOptions }) {
   function onClickAvatarImg() {
-    console.log('Update Local Storage Avatar.');
     setCurrentAvatar(`${avatarImg}`);
     localStorage.setItem('localAvatar', `${avatarImg}`);
     setShowAvatarOptions(false);
