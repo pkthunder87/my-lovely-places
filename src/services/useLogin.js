@@ -14,7 +14,7 @@ export function useLogin() {
       navigate('/app', { replace: true });
     },
     onError: (err) => {
-      console.log('ERROR', err);
+
       toast.error('Invalid email and/or password');
     },
   });
