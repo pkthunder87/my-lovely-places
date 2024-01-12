@@ -47,11 +47,7 @@ function Map() {
     fetchUser();
   }, []);
 
-  const {
-    isPending: isPendingEntries,
-    data: entries,
-    errorEntries,
-  } = useQuery({
+  const { isPending: isPendingEntries, data: entries } = useQuery({
     queryKey: ['entries'],
     queryFn: getEntries,
   });
@@ -64,11 +60,7 @@ function Map() {
 
   const [mapLat, mapLng] = useUrlPosition();
 
-  const {
-    isPending: isPendingLocations,
-    data: locations,
-    errorLocations,
-  } = useQuery({
+  const { isPending: isPendingLocations, data: locations } = useQuery({
     queryKey: ['locations'],
     queryFn: getLocations,
   });
