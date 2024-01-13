@@ -24,11 +24,6 @@ html {
   @apply firefox:text-xs;
 }
 
-/* .leaflet-container {
-  height: 100%;
-  width: 100%;
-} */
-
 .leaflet-popup-content-wrapper,
 .leaflet-popup-tip {
   @apply bg-pale-blue text-white;
@@ -39,7 +34,7 @@ html {
 }
 
 .leaflet-popup-content-wrapper {
-  @apply border-accent-teal border-l-8 p-0;
+  @apply border-l-8 border-accent-teal p-0;
 }
 
 .leaflet-popup-close-button {
