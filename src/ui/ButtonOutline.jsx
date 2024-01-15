@@ -4,8 +4,6 @@ function ButtonOutline({
   children,
   height,
   width,
-  textColor,
-  bgColor,
   linkTo,
 }) {
   {
