@@ -3,11 +3,7 @@ import { getEntries } from '../services/apiEntries';
 import MoonLoader from 'react-spinners/MoonLoader';
 
 function EntriesTable() {
-  const {
-    isPending,
-    data: entries,
-    error,
-  } = useQuery({
+  const { isPending } = useQuery({
     queryKey: ['entries'],
     queryFn: getEntries,
   });
