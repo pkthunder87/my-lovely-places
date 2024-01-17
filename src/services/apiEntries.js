@@ -1,10 +1,6 @@
 import supabase from './supabase';
 
 export async function getEntries() {
-  // const localData = JSON.parse(
-  //   localStorage.getItem('sb-euonjwwdtbyhkwleqcek-auth-token'),
-  // );
-
   const {
     data: { user },
   } = await supabase.auth.getUser();
@@ -23,7 +19,7 @@ export async function getEntries() {
 }
 
 export async function deleteEntry(id) {
-  const { data, error } = await supabase.from('entries').delete().eq('id', id);
+  const { error } = await supabase.from('entries').delete().eq('id', id);
 
   if (error) {
     console.error(error);
