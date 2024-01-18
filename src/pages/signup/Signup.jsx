@@ -23,10 +23,6 @@ function Signup() {
     );
   }
 
-  function onError() {
-    console.log('Failed Account Creation');
-  }
-
   return (
     <div className=" overflow-hidden sm:grid sm:grid-cols-[56%_44%] sm:grid-rows-[7dvh_88dvh] sm:items-center">
       <div className="col-span-2 self-start">
@@ -58,7 +54,7 @@ function Signup() {
 
       <form
         className=" mt-16 flex flex-col items-center gap-8 self-start firefox:mt-24 sm:mt-16"
-        onSubmit={handleSubmit(onSubmit, onError)}
+        onSubmit={handleSubmit(onSubmit)}
       >
         <input
           className="input-login h-10 w-[84dvw] rounded-2xl text-lg sm:h-11 sm:w-[40dvw]"
