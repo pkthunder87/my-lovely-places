@@ -7,8 +7,8 @@ import { useLogin } from '../../services/useLogin';
 import PuffLoader from 'react-spinners/PuffLoader';
 
 function Login() {
-  const [email, setEmail] = useState('paul@example.com');
-  const [password, setPassword] = useState('pass1234');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
 
   const { login, isPending } = useLogin();
 
