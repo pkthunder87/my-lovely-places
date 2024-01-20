@@ -7,7 +7,6 @@ import { FaChevronLeft } from 'react-icons/fa6';
 import { FaChevronRight } from 'react-icons/fa6';
 import MoonLoader from 'react-spinners/MoonLoader';
 
-import fakeEntries from '../../data/fakeEntries';
 import SecondaryMoods from './SecondaryMoods';
 import { moodColor } from '../../data/moods';
 import { getLocations } from '../../services/apiLocations';
