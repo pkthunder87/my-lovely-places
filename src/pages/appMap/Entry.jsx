@@ -1,6 +1,5 @@
 import { useNavigate, useParams } from 'react-router-dom';
 
-import { MdFastfood } from 'react-icons/md';
 import { FaTrash } from 'react-icons/fa6';
 import { FaRegEdit } from 'react-icons/fa';
 import { FaChevronLeft } from 'react-icons/fa6';
@@ -14,27 +13,18 @@ import { deleteEntry, getEntries } from '../../services/apiEntries';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import LocationIcon from '../../ui/LocationIcon';
 import toast from 'react-hot-toast';
-import { useCurrentUser } from '../../contexts/UserContext';
 
 const moodsColor = moodColor;
 
 function Entry() {
   const { id } = useParams();
-  const {
-    isPending: isPendingEntries,
-    data: entries,
-    errorEntries,
-  } = useQuery({
+  const { isPending: isPendingEntries, data: entries } = useQuery({
     queryKey: ['entries'],
     queryFn: getEntries,
   });
   const navigate = useNavigate();
 
-  const {
-    isPending: isPendingLocations,
-    data: locations,
-    errorLocations,
-  } = useQuery({
+  const { isPending: isPendingLocations, data: locations } = useQuery({
     queryKey: ['locations'],
     queryFn: getLocations,
   });
@@ -61,8 +51,6 @@ function Entry() {
     },
     onError: (err) => toast.error(err.message),
   });
-
-  const { currentUser } = useCurrentUser();
 
   if (isPendingEntries || isPendingLocations)
     return (
