@@ -9,20 +9,12 @@ import { useQuery } from '@tanstack/react-query';
 import { getLocations } from '../../services/apiLocations';
 
 function EntryList() {
-  const {
-    isPending: isPendingEntries,
-    data: entries,
-    errorEntries,
-  } = useQuery({
+  const { isPending: isPendingEntries, data: entries } = useQuery({
     queryKey: ['entries'],
     queryFn: getEntries,
   });
 
-  const {
-    isPending: isPendingLocations,
-    data: locations,
-    errorLocations,
-  } = useQuery({
+  const { isPending: isPendingLocations } = useQuery({
     queryKey: ['locations'],
     queryFn: getLocations,
   });
