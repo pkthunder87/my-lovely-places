@@ -1,7 +1,3 @@
-import { MdFastfood } from 'react-icons/md';
-import { IoRestaurant } from 'react-icons/io5';
-import { FaShopify } from 'react-icons/fa';
-import { MdOutlineHealthAndSafety } from 'react-icons/md';
 import MoonLoader from 'react-spinners/MoonLoader';
 
 import { NavLink } from 'react-router-dom';
