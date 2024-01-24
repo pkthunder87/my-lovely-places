@@ -9,23 +9,15 @@ import LocationIcon from '../../ui/LocationIcon';
 
 const moodsColor = moodColor;
 
-function EntryItem({ entry, index }) {
-  const { id, user } = entry;
+function EntryItem({ entry }) {
+  const { id } = entry;
 
-  const {
-    isPending: isPendingEntries,
-    data: entries,
-    errorEntries,
-  } = useQuery({
+  const { isPending: isPendingEntries, data: entries } = useQuery({
     queryKey: ['entries'],
     queryFn: getEntries,
   });
 
-  const {
-    isPending: isPendingLocations,
-    data: locations,
-    errorLocations,
-  } = useQuery({
+  const { isPending: isPendingLocations, data: locations } = useQuery({
     queryKey: ['locations'],
     queryFn: getLocations,
   });
